@@ -1,0 +1,30 @@
+<div class="sec" style="padding:60px 20px;">
+  <div class="pl-wrap">
+    <div class="glass sec-pad" style="max-width:800px;margin:0 auto;">
+      <h1 class="pl-d2">{{ product.title }}</h1>
+      <div class="pr" style="margin:16px 0;font-size:24px;">
+        <strong>{{ product.price | money }}</strong>
+        {% if product.compare_at_price > product.price %}
+          <s style="color:var(--pl-paper-3);margin-left:8px;">{{ product.compare_at_price | money }}</s>
+        {% endif %}
+      </div>
+      <div class="rte" style="margin:20px 0;line-height:1.6;">
+        {{ product.description }}
+      </div>
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="btn btn-primary" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Details",
+  "tag": "section",
+  "class": "section-main-product"
+}
+{% endschema %}

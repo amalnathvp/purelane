@@ -1,0 +1,37 @@
+<div class="sec" style="padding:60px 20px;">
+  <div class="pl-wrap">
+    <div class="glass sec-pad" style="max-width:800px;margin:0 auto;">
+      <h1 class="pl-d2">Your Cart</h1>
+      {% if cart.item_count > 0 %}
+        <form action="{{ routes.cart_url }}" method="post" style="margin-top:30px;">
+          {% for item in cart.items %}
+            <div style="display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(75,58,143,.12);">
+              <div>
+                <h4>{{ item.product.title }}</h4>
+                <p style="font-size:13px;color:var(--pl-paper-3);">{{ item.variant.title }} &times; {{ item.quantity }}</p>
+              </div>
+              <div>
+                <strong>{{ item.final_line_price | money }}</strong>
+              </div>
+            </div>
+          {% endfor %}
+          <div style="margin-top:24px;text-align:right;">
+            <p class="pl-d3">Total: <strong>{{ cart.total_price | money }}</strong></p>
+            <button type="submit" name="checkout" class="btn btn-primary" style="margin-top:16px;">Proceed to Checkout</button>
+          </div>
+        </form>
+      {% else %}
+        <p class="pl-lede" style="margin-top:20px;">Your cart is currently empty.</p>
+        <a href="{{ routes.root_url }}#shop" class="btn btn-primary" style="margin-top:20px;">Continue Shopping</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Items",
+  "tag": "section",
+  "class": "section-main-cart"
+}
+{% endschema %}

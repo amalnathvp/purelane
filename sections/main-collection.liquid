@@ -1,0 +1,23 @@
+<div class="sec" style="padding:60px 20px;">
+  <div class="pl-wrap">
+    <div class="panel-head">
+      <h1 class="pl-d2">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <p class="pl-lede">{{ collection.description }}</p>
+      {% endif %}
+    </div>
+    <div class="shelf" style="margin-top:40px;">
+      {% for product in collection.products %}
+        {% render 'purelane-card-product', product: product %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "tag": "section",
+  "class": "section-main-collection"
+}
+{% endschema %}
