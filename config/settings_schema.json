@@ -1,0 +1,37 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Purelane",
+    "theme_version": "1.0.0",
+    "theme_author": "Amalnath",
+    "theme_documentation_url": "https://github.com/amalnathvp/purelane",
+    "theme_support_url": "https://github.com/amalnathvp/purelane"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "brand_color",
+        "label": "Brand Color",
+        "default": "#4b3a8f"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent Color",
+        "default": "#b8701c"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image"
+      }
+    ]
+  }
+]
