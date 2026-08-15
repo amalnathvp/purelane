@@ -1,0 +1,117 @@
+{% comment %}
+  Purelane Atmospheric Multi-Scene Background & Animated Water Caustics
+{% endcomment %}
+<div class="pl-scenes" id="scenes" data-d="1" aria-hidden="true">
+  <div class="pl-scene s1 on"></div>
+  <div class="pl-scene s2"></div>
+  <div class="pl-scene s3"></div>
+  <div class="pl-scene s4"></div>
+
+  <div class="pl-water" id="water">
+    <div class="pl-wl pl-wl-a">
+      <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#eafff4" stop-opacity="0"/>
+            <stop offset=".18" stop-color="#f2fff8" stop-opacity=".95"/>
+            <stop offset=".5" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset=".82" stop-color="#e6fbef" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#eafff4" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="wf" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.0022 0.019" numOctaves="3" seed="21" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="72" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#wf)">
+          <path d="M262 230 Q372 261 482 238 Q592 247 702 250 Q812 210 923 235 Q1033 201 1143 213 Q1253 232 1363 215 Q1473 261 1583 238 Q1694 248 1804 250 Q1914 211 2024 236 Q2134 201 2244 214" stroke="url(#cg)" stroke-width="1.7" fill="none" opacity="0.45" stroke-linecap="round"/>
+          <path d="M137 256 Q307 242 477 258 Q646 238 816 245 Q985 259 1155 247 Q1324 277 1494 262 Q1664 267 1833 269 Q2003 243 2172 259 Q2342 237 2512 245" stroke="url(#cg)" stroke-width="5.1" fill="none" opacity="0.23" stroke-linecap="round"/>
+          <path d="M389 715 Q514 756 639 725 Q763 738 888 742 Q1013 688 1138 721 Q1262 674 1387 692 Q1512 716 1636 694 Q1761 756 1886 724 Q2010 739 2135 742 Q2260 689 2385 722" stroke="url(#cg)" stroke-width="5.7" fill="none" opacity="0.37" stroke-linecap="round"/>
+          <path d="M140 308 Q297 310 454 302 Q611 321 769 312 Q926 314 1083 316 Q1240 298 1397 309 Q1555 295 1712 300 Q1869 309 2026 301 Q2184 321 2341 311" stroke="url(#cg)" stroke-width="5.5" fill="none" opacity="0.47" stroke-linecap="round"/>
+          <path d="M570 422 Q687 462 805 437 Q922 436 1039 446 Q1156 391 1274 423 Q1391 388 1508 398 Q1625 432 1742 406 Q1860 462 1977 436 Q2094 438 2211 447 Q2329 391 2446 423 Q2563 387 2680 398 Q2798 430 2915 405" stroke="url(#cg)" stroke-width="2.3" fill="none" opacity="0.25" stroke-linecap="round"/>
+          <path d="M564 653 Q704 686 843 651 Q983 691 1123 679 Q1263 644 1403 671 Q1542 609 1682 638 Q1822 634 1962 626 Q2102 685 2241 650 Q2381 691 2521 678 Q2661 645 2801 671" stroke="url(#cg)" stroke-width="5.2" fill="none" opacity="0.23" stroke-linecap="round"/>
+          <path d="M229 990 Q390 1026 551 1018 Q712 974 873 1006 Q1034 944 1195 972 Q1356 977 1517 963 Q1678 1028 1839 991 Q2000 1027 2161 1018 Q2322 976 2483 1006" stroke="url(#cg)" stroke-width="6.1" fill="none" opacity="0.36" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="pl-wl pl-wl-b">
+      <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="wf2" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.005 0.031" numOctaves="2" seed="47" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#wf2)">
+          <path d="M355 217 Q442 234 529 234 Q616 202 703 222 Q790 190 877 203 Q964 215 1051 202 Q1138 242 1225 221 Q1312 235 1399 234 Q1486 202 1573 223" stroke="url(#cg)" stroke-width="3.4" fill="none" opacity="0.17" stroke-linecap="round"/>
+          <path d="M160 723 Q278 720 396 713 Q514 738 633 725 Q751 735 869 734 Q987 715 1105 728 Q1223 706 1341 715 Q1459 720 1577 713" stroke="url(#cg)" stroke-width="1.1" fill="none" opacity="0.17" stroke-linecap="round"/>
+          <path d="M315 17 Q425 -1 536 5 Q647 22 758 9 Q869 37 980 24 Q1090 25 1201 30 Q1312 2 1423 18 Q1534 -1 1645 5 Q1755 21 1866 8" stroke="url(#cg)" stroke-width="2.1" fill="none" opacity="0.26" stroke-linecap="round"/>
+          <path d="M-34 646 Q124 650 283 636 Q442 669 600 653 Q759 657 918 661 Q1076 631 1235 649 Q1394 626 1553 634" stroke="url(#cg)" stroke-width="1.2" fill="none" opacity="0.29" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="pl-wl pl-wl-c">
+      <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f4fff9" stop-opacity=".85"/>
+            <stop offset=".38" stop-color="#dcf6e7" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#d4f2e2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g>
+          <polygon points="95,-80 152,-80 517,1180 439,1180" fill="url(#sg)" opacity="0.26"/>
+          <polygon points="433,-80 491,-80 885,1180 807,1180" fill="url(#sg)" opacity="0.41"/>
+          <polygon points="751,-80 919,-80 1180,1180 953,1180" fill="url(#sg)" opacity="0.31"/>
+          <polygon points="1048,-80 1135,-80 1400,1180 1282,1180" fill="url(#sg)" opacity="0.28"/>
+          <polygon points="1366,-80 1520,-80 1898,1180 1690,1180" fill="url(#sg)" opacity="0.28"/>
+          <polygon points="1695,-80 1808,-80 2067,1180 1914,1180" fill="url(#sg)" opacity="0.35"/>
+          <polygon points="1948,-80 2013,-80 2341,1180 2254,1180" fill="url(#sg)" opacity="0.32"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="pl-wl pl-wl-s">
+      <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sf" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+            <stop offset=".55" stop-color="#e8fff2" stop-opacity=".16"/>
+            <stop offset="1" stop-color="#e8fff2" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="sfw" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.004 0.05" numOctaves="2" seed="9" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+        <g filter="url(#sfw)">
+          <rect x="-100" y="-40" width="2000" height="150" fill="url(#sf)"/>
+          <rect x="-100" y="60" width="2000" height="60" fill="url(#sf)" opacity=".5"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="pl-bub">
+      <span style="--x:91.9%;--s:6.7px;--dur:21.5s;--dly:19.0s;--drift:-11px"></span>
+      <span style="--x:43.4%;--s:5.7px;--dur:26.8s;--dly:16.1s;--drift:-11px"></span>
+      <span style="--x:96.6%;--s:6.2px;--dur:13.7s;--dly:10.3s;--drift:38px"></span>
+      <span style="--x:6.0%;--s:3.6px;--dur:24.4s;--dly:10.6s;--drift:3px"></span>
+      <span style="--x:70.3%;--s:3.3px;--dur:20.9s;--dly:9.2s;--drift:-39px"></span>
+      <span style="--x:67.7%;--s:4.0px;--dur:27.0s;--dly:16.5s;--drift:-5px"></span>
+      <span style="--x:2.1%;--s:7.1px;--dur:22.0s;--dly:3.1s;--drift:-37px"></span>
+      <span style="--x:69.4%;--s:8.1px;--dur:21.9s;--dly:10.7s;--drift:-24px"></span>
+      <span style="--x:64.1%;--s:8.2px;--dur:17.3s;--dly:9.0s;--drift:2px"></span>
+      <span style="--x:21.8%;--s:7.1px;--dur:15.7s;--dly:18.4s;--drift:-13px"></span>
+      <span style="--x:61.9%;--s:6.6px;--dur:26.3s;--dly:7.2s;--drift:-23px"></span>
+      <span style="--x:45.9%;--s:8.9px;--dur:24.3s;--dly:7.2s;--drift:20px"></span>
+      <span style="--x:52.5%;--s:3.3px;--dur:20.2s;--dly:19.6s;--drift:-31px"></span>
+      <span style="--x:11.1%;--s:7.9px;--dur:20.4s;--dly:10.8s;--drift:-40px"></span>
+      <span style="--x:7.6%;--s:6.4px;--dur:19.5s;--dly:0.2s;--drift:-26px"></span>
+      <span style="--x:18.6%;--s:9.0px;--dur:24.5s;--dly:8.7s;--drift:13px"></span>
+    </div>
+  </div>
+
+  <div class="pl-vig"></div>
+</div>

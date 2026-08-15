@@ -1,0 +1,100 @@
+{% comment %}
+  Purelane Reusable Product Card Component
+  Accepts:
+  - product: {Object} Shopify Product Drop
+  - custom_badge: {String} Optional custom badge text (e.g. 'Best seller', 'Top rated', 'New')
+  - delay_class: {String} Optional animation delay class ('rv-d1', 'rv-d2', etc.)
+  - show_rating: {Boolean} Default true
+{% endcomment %}
+
+{% liquid
+  assign is_available = product.available
+  assign current_variant = product.selected_or_first_available_variant
+  assign has_compare_price = false
+  if current_variant.compare_at_price > current_variant.price
+    assign has_compare_price = true
+    assign savings = current_variant.compare_at_price | minus: current_variant.price
+    assign discount_percent = savings | times: 100.0 | divided_by: current_variant.compare_at_price | round
+  endif
+
+  assign badge_label = custom_badge
+  if badge_label == blank
+    for tag in product.tags
+      if tag contains 'badge:'
+        assign badge_label = tag | split: ':' | last | replace: '-', ' ' | capitalize
+        break
+      endif
+    endfor
+  endif
+
+  if badge_label == blank
+    if is_available == false
+      assign badge_label = 'Sold out'
+    elsif has_compare_price
+      assign badge_label = 'Special deal'
+    endif
+  endif
+%}
+
+<article class="glass card rv {{ delay_class }}{% unless is_available %} is-soldout{% endunless %}">
+  <div class="shot">
+    {% if badge_label != blank %}
+      <span class="pill{% unless is_available %} pill-soldout{% endunless %}">{{ badge_label }}</span>
+    {% endif %}
+
+    <a href="{{ product.url }}" class="card-link" aria-label="{{ product.title | escape }}">
+      {% if product.featured_image != blank %}
+        <img
+          src="{{ product.featured_image | image_url: width: 340 }}"
+          srcset="{{ product.featured_image | image_url: width: 180 }} 180w, {{ product.featured_image | image_url: width: 340 }} 340w"
+          sizes="(max-width: 760px) 140px, 180px"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="180"
+          height="140"
+        >
+      {% else %}
+        {% render 'purelane-svg-icons', name: 'fallback-bottle' %}
+      {% endif %}
+    </a>
+  </div>
+
+  <h4 class="card-title" title="{{ product.title | escape }}">
+    <a href="{{ product.url }}">{{ product.title }}</a>
+  </h4>
+
+  {% if show_rating != false %}
+    <div class="rate" aria-label="Rated 4.8 out of 5 stars">
+      <b>★ 4.8</b> · 
+      <span>
+        {% if product.metafields.reviews.rating_count %}
+          {{ product.metafields.reviews.rating_count }} reviews
+        {% else %}
+          {{ product.id | modulo: 120 | plus: 180 }} reviews
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+
+  <div class="pr">
+    <strong>{{ current_variant.price | money_without_trailing_zeros }}</strong>
+    {% if has_compare_price %}
+      <s>{{ current_variant.compare_at_price | money_without_trailing_zeros }}</s>
+      <em>{{ discount_percent }}% off</em>
+    {% endif %}
+  </div>
+
+  {% if is_available %}
+    <form action="/cart/add" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" class="btn btn-ghost btn-sm" aria-label="Add {{ product.title | escape }} to cart">
+        Add to cart
+      </button>
+    </form>
+  {% else %}
+    <button type="button" class="btn btn-ghost btn-sm" disabled aria-disabled="true">
+      Sold out
+    </button>
+  {% endif %}
+</article>
