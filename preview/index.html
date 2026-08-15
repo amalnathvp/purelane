@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purelane &mdash; Production Shopify Sections Verification</title>
+  <meta name="description" content="Plant-based homecare for kitchen, laundry, bathroom and hands. Free shipping across India.">
+  <meta name="theme-color" content="#eee7fb">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/purelane.css">
+  <style>
+    /* Theme Editor Simulation Controller */
+    .theme-editor-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 38px;
+      background: #17102b;
+      color: #faf7fd;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(236,230,247,.2);
+    }
+    .theme-editor-bar .badge-tag {
+      background: #4b3a8f;
+      color: #f4fdf6;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 9px;
+      margin-left: 8px;
+    }
+    .theme-editor-bar .controls {
+      display: flex;
+      gap: 8px;
+    }
+    .theme-editor-bar button {
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10px;
+      transition: .2s;
+    }
+    .theme-editor-bar button:hover {
+      background: #b8701c;
+    }
+  </style>
+</head>
+<body class="purelane-body">
+
+  <!-- ================= THEME EDITOR SIMULATOR CONTROLS ================= -->
+  <div class="theme-editor-bar" aria-label="Theme Editor Simulation Toolbar">
+    <div>
+      <span>Purelane &middot; Shopify Dawn Production Sections</span>
+      <span class="badge-tag">OS 2.0 Live Preview</span>
+    </div>
+    <div class="controls">
+      <button onclick="simulateThemeEditorReload()">Simulate Section Reload</button>
+      <button onclick="toggleMotionPreference()">Toggle Reduced Motion</button>
+    </div>
+  </div>
+
+  <!-- ================= ATMOSPHERIC WATER & SCENE ENGINE ================= -->
+  <div class="pl-scenes" id="scenes" data-d="1" aria-hidden="true">
+    <div class="pl-scene s1 on"></div>
+    <div class="pl-scene s2"></div>
+    <div class="pl-scene s3"></div>
+    <div class="pl-scene s4"></div>
+
+    <div class="pl-water" id="water">
+      <div class="pl-wl pl-wl-a">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#eafff4" stop-opacity="0"/>
+              <stop offset=".18" stop-color="#f2fff8" stop-opacity=".95"/>
+              <stop offset=".5" stop-color="#ffffff" stop-opacity="1"/>
+              <stop offset=".82" stop-color="#e6fbef" stop-opacity=".9"/>
+              <stop offset="1" stop-color="#eafff4" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="wf" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.0022 0.019" numOctaves="3" seed="21" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="72" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#wf)">
+            <path d="M262 230 Q372 261 482 238 Q592 247 702 250 Q812 210 923 235 Q1033 201 1143 213 Q1253 232 1363 215 Q1473 261 1583 238 Q1694 248 1804 250 Q1914 211 2024 236 Q2134 201 2244 214" stroke="url(#cg)" stroke-width="1.7" fill="none" opacity="0.45" stroke-linecap="round"/>
+            <path d="M137 256 Q307 242 477 258 Q646 238 816 245 Q985 259 1155 247 Q1324 277 1494 262 Q1664 267 1833 269 Q2003 243 2172 259 Q2342 237 2512 245" stroke="url(#cg)" stroke-width="5.1" fill="none" opacity="0.23" stroke-linecap="round"/>
+            <path d="M389 715 Q514 756 639 725 Q763 738 888 742 Q1013 688 1138 721 Q1262 674 1387 692 Q1512 716 1636 694 Q1761 756 1886 724 Q2010 739 2135 742 Q2260 689 2385 722" stroke="url(#cg)" stroke-width="5.7" fill="none" opacity="0.37" stroke-linecap="round"/>
+            <path d="M140 308 Q297 310 454 302 Q611 321 769 312 Q926 314 1083 316 Q1240 298 1397 309 Q1555 295 1712 300 Q1869 309 2026 301 Q2184 321 2341 311" stroke="url(#cg)" stroke-width="5.5" fill="none" opacity="0.47" stroke-linecap="round"/>
+            <path d="M570 422 Q687 462 805 437 Q922 436 1039 446 Q1156 391 1274 423 Q1391 388 1508 398 Q1625 432 1742 406 Q1860 462 1977 436 Q2094 438 2211 447 Q2329 391 2446 423 Q2563 387 2680 398 Q2798 430 2915 405" stroke="url(#cg)" stroke-width="2.3" fill="none" opacity="0.25" stroke-linecap="round"/>
+            <path d="M564 653 Q704 686 843 651 Q983 691 1123 679 Q1263 644 1403 671 Q1542 609 1682 638 Q1822 634 1962 626 Q2102 685 2241 650 Q2381 691 2521 678 Q2661 645 2801 671" stroke="url(#cg)" stroke-width="5.2" fill="none" opacity="0.23" stroke-linecap="round"/>
+            <path d="M229 990 Q390 1026 551 1018 Q712 974 873 1006 Q1034 944 1195 972 Q1356 977 1517 963 Q1678 1028 1839 991 Q2000 1027 2161 1018 Q2322 976 2483 1006" stroke="url(#cg)" stroke-width="6.1" fill="none" opacity="0.36" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="pl-wl pl-wl-b">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="wf2" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.005 0.031" numOctaves="2" seed="47" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#wf2)">
+            <path d="M355 217 Q442 234 529 234 Q616 202 703 222 Q790 190 877 203 Q964 215 1051 202 Q1138 242 1225 221 Q1312 235 1399 234 Q1486 202 1573 223" stroke="url(#cg)" stroke-width="3.4" fill="none" opacity="0.17" stroke-linecap="round"/>
+            <path d="M160 723 Q278 720 396 713 Q514 738 633 725 Q751 735 869 734 Q987 715 1105 728 Q1223 706 1341 715 Q1459 720 1577 713" stroke="url(#cg)" stroke-width="1.1" fill="none" opacity="0.17" stroke-linecap="round"/>
+            <path d="M315 17 Q425 -1 536 5 Q647 22 758 9 Q869 37 980 24 Q1090 25 1201 30 Q1312 2 1423 18 Q1534 -1 1645 5 Q1755 21 1866 8" stroke="url(#cg)" stroke-width="2.1" fill="none" opacity="0.26" stroke-linecap="round"/>
+            <path d="M-34 646 Q124 650 283 636 Q442 669 600 653 Q759 657 918 661 Q1076 631 1235 649 Q1394 626 1553 634" stroke="url(#cg)" stroke-width="1.2" fill="none" opacity="0.29" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="pl-wl pl-wl-c">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f4fff9" stop-opacity=".85"/>
+              <stop offset=".38" stop-color="#dcf6e7" stop-opacity=".28"/>
+              <stop offset="1" stop-color="#d4f2e2" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g>
+            <polygon points="95,-80 152,-80 517,1180 439,1180" fill="url(#sg)" opacity="0.26"/>
+            <polygon points="433,-80 491,-80 885,1180 807,1180" fill="url(#sg)" opacity="0.41"/>
+            <polygon points="751,-80 919,-80 1180,1180 953,1180" fill="url(#sg)" opacity="0.31"/>
+            <polygon points="1048,-80 1135,-80 1400,1180 1282,1180" fill="url(#sg)" opacity="0.28"/>
+            <polygon points="1366,-80 1520,-80 1898,1180 1690,1180" fill="url(#sg)" opacity="0.28"/>
+            <polygon points="1695,-80 1808,-80 2067,1180 1914,1180" fill="url(#sg)" opacity="0.35"/>
+            <polygon points="1948,-80 2013,-80 2341,1180 2254,1180" fill="url(#sg)" opacity="0.32"/>
+          </g>
+        </svg>
+      </div>
+      <div class="pl-wl pl-wl-s">
+        <svg class="sv" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sf" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+              <stop offset=".55" stop-color="#e8fff2" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#e8fff2" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="sfw" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+              <feTurbulence type="fractalNoise" baseFrequency="0.004 0.05" numOctaves="2" seed="9" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+          <g filter="url(#sfw)">
+            <rect x="-100" y="-40" width="2000" height="150" fill="url(#sf)"/>
+            <rect x="-100" y="60" width="2000" height="60" fill="url(#sf)" opacity=".5"/>
+          </g>
+        </svg>
+      </div>
+      <div class="pl-bub">
+        <span style="--x:91.9%;--s:6.7px;--dur:21.5s;--dly:19.0s;--drift:-11px"></span>
+        <span style="--x:43.4%;--s:5.7px;--dur:26.8s;--dly:16.1s;--drift:-11px"></span>
+        <span style="--x:96.6%;--s:6.2px;--dur:13.7s;--dly:10.3s;--drift:38px"></span>
+        <span style="--x:6.0%;--s:3.6px;--dur:24.4s;--dly:10.6s;--drift:3px"></span>
+        <span style="--x:70.3%;--s:3.3px;--dur:20.9s;--dly:9.2s;--drift:-39px"></span>
+        <span style="--x:67.7%;--s:4.0px;--dur:27.0s;--dly:16.5s;--drift:-5px"></span>
+        <span style="--x:2.1%;--s:7.1px;--dur:22.0s;--dly:3.1s;--drift:-37px"></span>
+        <span style="--x:69.4%;--s:8.1px;--dur:21.9s;--dly:10.7s;--drift:-24px"></span>
+        <span style="--x:64.1%;--s:8.2px;--dur:17.3s;--dly:9.0s;--drift:2px"></span>
+        <span style="--x:21.8%;--s:7.1px;--dur:15.7s;--dly:18.4s;--drift:-13px"></span>
+        <span style="--x:61.9%;--s:6.6px;--dur:26.3s;--dly:7.2s;--drift:-23px"></span>
+        <span style="--x:45.9%;--s:8.9px;--dur:24.3s;--dly:7.2s;--drift:20px"></span>
+        <span style="--x:52.5%;--s:3.3px;--dur:20.2s;--dly:19.6s;--drift:-31px"></span>
+        <span style="--x:11.1%;--s:7.9px;--dur:20.4s;--dly:10.8s;--drift:-40px"></span>
+        <span style="--x:7.6%;--s:6.4px;--dur:19.5s;--dly:0.2s;--drift:-26px"></span>
+        <span style="--x:18.6%;--s:9.0px;--dur:24.5s;--dly:8.7s;--drift:13px"></span>
+      </div>
+    </div>
+    <div class="pl-vig"></div>
+  </div>
+
+  <!-- ================= ANNOUNCEMENT TICKER ================= -->
+  <div class="pl-ticker" aria-hidden="true" style="margin-top:38px;">
+    <div class="track">
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+      <span>Free shipping <b>on every bundle across India</b></span>
+      <span>100% plant-based <b>and non-toxic</b></span>
+      <span>Loved by <b>30,000+ happy homes</b></span>
+      <span>Buy 3 <b>at flat ₹499</b></span>
+    </div>
+  </div>
+
+  <!-- ================= FIXED HEADER ================= -->
+  <header class="pl-header" id="hdr" data-section-id="header">
+    <div class="pl-navpill glass">
+      <a class="pl-brand" href="#top" aria-label="Purelane home">
+        <span class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#b8701c">
+            <path d="M12 3 20.5 8v8L12 21 3.5 16V8L12 3Z"/>
+            <path d="M12 12 20.5 8M12 12v9M12 12 3.5 8"/>
+          </svg>
+        </span>
+        <span class="txt">
+          <span class="n1">Purelane</span>
+          <span class="n2">Clean, simply</span>
+        </span>
+      </a>
+      <nav class="pl-nav" aria-label="Main Navigation">
+        <a href="#top">Home</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#how">How it works</a>
+        <a href="#shop">Shop</a>
+        <a href="#bundles">Bundles</a>
+      </nav>
+      <div class="pl-navtools">
+        <button class="pl-ico hide-s" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+        <button class="pl-ico hide-s" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"/></svg></button>
+        <button class="pl-ico" aria-label="Cart, 0 items"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h2l2.2 10.4a1.6 1.6 0 0 0 1.6 1.3h7.6a1.6 1.6 0 0 0 1.6-1.3L20.5 9H6.4"/><circle cx="10" cy="20.5" r="1.1"/><circle cx="17.5" cy="20.5" r="1.1"/></svg><span class="pl-dot">0</span></button>
+        <button class="pl-ico pl-burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SECTION PROGRESS RAIL ================= -->
+  <nav class="pl-rail" aria-label="Section navigation rail">
+    <a href="#top" class="on" aria-label="Hero"></a>
+    <a href="#ingredients" aria-label="Ingredients"></a>
+    <a href="#how" aria-label="How it works"></a>
+    <a href="#proof" aria-label="Proof"></a>
+    <a href="#combos" aria-label="Combos"></a>
+    <a href="#bundles" aria-label="Bundles"></a>
+    <a href="#shop" aria-label="Shop"></a>
+    <a href="#reviews" aria-label="Reviews"></a>
+  </nav>
+
+  <main id="top">
+
+    <!-- ================= 01. HERO SECTION ================= -->
+    <section class="hero" data-scene="1" data-section-id="hero">
+      <div class="hero-grid">
+
+        <div class="badges glass-2" aria-label="Product promises">
+          <div class="badge">
+            <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg></span>
+            <span>Plant<br>powered</span>
+          </div>
+          <div class="badge">
+            <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg></span>
+            <span>Safe for<br>kids &amp; pets</span>
+          </div>
+          <div class="badge">
+            <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M6.4 17.6 17.6 6.4"/></svg></span>
+            <span>Zero harsh<br>chemicals</span>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <h1 class="pl-d1 rv in">Clean<br>That<br><span class="pl-lime">Lasts</span></h1>
+          <div class="rule rv rv-d1">
+            <i></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+            <i></i>
+          </div>
+          <p class="pl-lede rv rv-d2">Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it.</p>
+          <div class="hero-cta rv rv-d3">
+            <a class="btn btn-primary" href="#shop">Shop now
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#how">How it works</a>
+          </div>
+
+          <div class="badgestrip rv rv-d4">
+            <div class="glass-2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+              Plant powered
+            </div>
+            <div class="glass-2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg>
+              Kids &amp; pet safe
+            </div>
+            <div class="glass-2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M6.4 17.6 17.6 6.4"/></svg>
+              Zero harsh chem
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-prod" id="heroProd">
+          <div class="hstage" id="hstage" data-autoplay-speed="3800">
+            <div class="hslide hs1 on" data-n="1" data-slide-index="0">
+              <span class="hp p-kbtl a d1" role="img" aria-label="Purelane foaming kitchen cleaner spray bottle"></span>
+              <div class="glass-2 ptag">
+                <span class="lbl">Single bottle</span>
+                <span class="val"><strong>₹200</strong><s>₹299</s></span>
+                <span class="cut">33% off</span>
+              </div>
+            </div>
+            <div class="hslide hs2" data-n="2" data-slide-index="1">
+              <span class="hp p-tbtl a d1" role="img" aria-label="Purelane tap cleaner and limescale remover spray bottle"></span>
+              <span class="hp p-kbtl b d2" role="img" aria-label="Purelane foaming kitchen cleaner spray bottle"></span>
+              <div class="glass-2 ptag">
+                <span class="lbl">Any 2 products</span>
+                <span class="val"><strong>₹349</strong><s>₹598</s></span>
+                <span class="cut">Save ₹249</span>
+              </div>
+            </div>
+            <div class="hslide hs3" data-n="3" data-slide-index="2">
+              <span class="hp p-tbtl a d1" role="img" aria-label="Purelane tap cleaner and limescale remover spray bottle"></span>
+              <span class="hp p-mbtl b d2" role="img" aria-label="Purelane copper, bronze and brass cleaner pump bottle"></span>
+              <span class="hp p-kbtl c d3" role="img" aria-label="Purelane foaming kitchen cleaner spray bottle"></span>
+              <div class="glass-2 ptag">
+                <span class="lbl">Any 3 products</span>
+                <span class="val"><strong>₹499</strong><s>₹897</s></span>
+                <span class="cut">Save ₹398</span>
+              </div>
+            </div>
+          </div>
+          <div class="hdots" id="hdots">
+            <button type="button" class="on" aria-label="Show 1 product"></button>
+            <button type="button" class="" aria-label="Show 2 products"></button>
+            <button type="button" class="" aria-label="Show 3 products"></button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 05. CUSTOMER REVIEWS (MARQUEE RAIL) ================= -->
+    <section class="sec revband" id="reviews" data-scene="1" data-section-id="reviews">
+      <div class="pl-wrap">
+        <div class="revhead rv">
+          <span class="pl-kicker">That's what they said</span>
+          <span class="agg"><span class="st">★★★★★</span> <b>4.8</b> from 8,000+ reviews</span>
+          <span class="agg">Loved by <b>12 lakh+</b> homes</span>
+        </div>
+      </div>
+      <div class="revrail rv" aria-label="Customer reviews">
+        <div class="revtrack">
+          <!-- Slide set 1 -->
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Works like a charm</h5><p>Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Anita</b><span>&middot; Laundry detergent</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Best dishwash ever</h5><p>Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Priya</b><span>&middot; Dishwash gel</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Great product, great packaging</h5><p>Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Sunita</b><span>&middot; Liquid handwash</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Dog friendly</h5><p>We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Rohit S.</b><span>&middot; Floor cleaner</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Sparkling taps again</h5><p>Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Verified buyer</b><span>&middot; Tap cleaner</span></div></article>
+          <!-- Slide set 2 (seamless infinite loop) -->
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Works like a charm</h5><p>Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Anita</b><span>&middot; Laundry detergent</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Best dishwash ever</h5><p>Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Priya</b><span>&middot; Dishwash gel</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Great product, great packaging</h5><p>Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Sunita</b><span>&middot; Liquid handwash</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Dog friendly</h5><p>We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Rohit S.</b><span>&middot; Floor cleaner</span></div></article>
+          <article class="glass-2 rcard"><div class="st">★★★★★</div><h5>Sparkling taps again</h5><p>Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.</p><div class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg><b>Verified buyer</b><span>&middot; Tap cleaner</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INGREDIENTS ================= -->
+    <section class="sec" id="ingredients" data-scene="2" data-section-id="ingredients">
+      <div class="pl-wrap">
+        <div class="glass sec-pad rv">
+          <div class="panel-head">
+            <h2 class="pl-d2">Sourced from nature</h2>
+            <div class="rule">
+              <i></i>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+              <i></i>
+            </div>
+          </div>
+          <div class="ing">
+            <div class="ing-i">
+              <div class="art">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="50" cy="62" r="25"/>
+                  <path d="M31 53c9-6 29-6 38 0" stroke="#f0a03c"/>
+                  <path d="M41 63c4 8 14 8 18 0" opacity=".55"/>
+                  <path d="M50 37V25"/>
+                  <path d="M50 27C42 18 30 16 21 21c5 10 17 13 29 6Z" stroke="#f0a03c"/>
+                  <path d="M50 27c8-9 20-11 29-6-5 10-17 13-29 6Z" stroke="#f0a03c"/>
+                </svg>
+              </div>
+              <h4>Coconut</h4>
+              <p>Plant-derived cleansers that lift grease</p>
+            </div>
+            <div class="ing-i">
+              <div class="art">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="45" cy="58" r="23"/>
+                  <path d="M45 35v46M22 58h46" opacity=".4"/>
+                  <path d="M29 42 61 74M61 42 29 74" opacity=".26"/>
+                  <path d="M62 28c13-1 20 10 15 20-4 8-15 9-19 2" stroke="#f0a03c"/>
+                  <path d="M45 34c-3-8 2-15 10-16 1 9-3 15-10 16Z" stroke="#f0a03c"/>
+                </svg>
+              </div>
+              <h4>Orange peel</h4>
+              <p>Natural degreaser and fresh citrus lift</p>
+            </div>
+            <div class="ing-i">
+              <div class="art">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="36" cy="66" r="16"/>
+                  <circle cx="64" cy="69" r="14"/>
+                  <circle cx="50" cy="43" r="14"/>
+                  <path d="M50 29V17"/>
+                  <path d="M50 21c-8-8-18-8-23-2 7 8 17 10 23 2Z" stroke="#f0a03c"/>
+                  <path d="M31 60a5 5 0 0 1 4-4" opacity=".6"/>
+                  <path d="M46 38a5 5 0 0 1 4-4" opacity=".6"/>
+                </svg>
+              </div>
+              <h4>Soap nut</h4>
+              <p>A traditional plant foaming agent</p>
+            </div>
+            <div class="ing-i">
+              <div class="art">
+                <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 82C36 66 58 44 82 20" stroke="#f0a03c"/>
+                  <path d="M27 73c-6-7-4-15 3-18 4 7 3 14-3 18Z"/>
+                  <path d="M31 69c8-4 15 0 16 8-8 2-14-1-16-8Z"/>
+                  <path d="M41 59c-6-7-4-16 3-19 4 7 3 15-3 19Z"/>
+                  <path d="M45 55c9-4 16 0 17 8-8 2-15-1-17-8Z"/>
+                  <path d="M56 44c-6-7-4-16 3-19 4 7 3 15-3 19Z"/>
+                  <path d="M60 40c9-4 16 0 17 8-8 2-15-1-17-8Z"/>
+                  <path d="M70 30c-5-7-3-15 4-18 3 7 2 14-4 18Z"/>
+                </svg>
+              </div>
+              <h4>Neem</h4>
+              <p>Time-tested antibacterial from the tree</p>
+            </div>
+            <div class="ing-i">
+              <div class="art">
+                <svg viewBox="0 0 100 100" fill="none">
+                  <g fill="#ece6f7" opacity=".88">
+                    <path d="M50 88C44 62 39 42 24 15c15 27 22 47 29 73Z"/>
+                    <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"/>
+                    <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"/>
+                    <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"/>
+                    <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"/>
+                  </g>
+                  <path d="M50 88h6" stroke="#f0a03c" stroke-width="2.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h4>Lemongrass</h4>
+              <p>Clean fragrance with nothing synthetic</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PILLARS ================= -->
+    <section class="sec" id="how" data-scene="2" data-section-id="how">
+      <div class="pl-wrap">
+        <div class="pillars">
+          <article class="glass pillar rv">
+            <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8.5" r="3.2"/><circle cx="16.4" cy="6.6" r="2.2"/><circle cx="15" cy="13" r="2.8"/><circle cx="8.6" cy="15.6" r="2.1"/><path d="M4 21h16"/></svg></span>
+            <h3 class="pl-d3">Less scrubbing</h3>
+            <p class="pl-body-s">A foaming formulation. The foam clings to grease and lifts it, so you wipe instead of scrub.</p>
+            <a class="btn btn-ghost btn-sm" href="#shop">Learn more</a>
+          </article>
+          <article class="glass pillar rv rv-d2">
+            <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v6.2c0 4.3 3.1 7.6 7.5 8.8 4.4-1.2 7.5-4.5 7.5-8.8V6L12 3Z"/><path d="m9 12 2.2 2.2L15.4 10"/></svg></span>
+            <h3 class="pl-d3">Clean ingredients</h3>
+            <p class="pl-body-s">No sulphates, no chlorine, no synthetic fragrance. Nothing on the label you would not want near your food.</p>
+            <a class="btn btn-ghost btn-sm" href="#ingredients">Learn more</a>
+          </article>
+          <article class="glass pillar rv rv-d3">
+            <span class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"/></svg></span>
+            <h3 class="pl-d3">Safe around everyone</h3>
+            <p class="pl-body-s">Gentle on hands, safe around kids and pets, and it leaves no toxic residue on the surfaces you touch every day.</p>
+            <a class="btn btn-ghost btn-sm" href="#proof">Learn more</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROOF / ROTATOR ================= -->
+    <section class="sec" id="proof" data-scene="3" data-section-id="proof">
+      <div class="pl-wrap">
+        <div class="glass sec-pad rv">
+          <div class="proof">
+            <div class="proof-l">
+              <span class="pl-kicker">Why it works</span>
+              <h2 class="pl-d2" style="margin-top:12px">Tough on grime.<br>Gentle on everything else.</h2>
+              <p class="pl-body-s" style="max-width:40ch">Every formula is built on plant-derived cleansers and essential oils. It behaves exactly like the cleaner you are used to, minus the things you never signed up for.</p>
+              <a class="btn btn-primary" href="#ingredients">See the ingredient list
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+              </a>
+            </div>
+
+            <div class="glass-2 rot" id="rot" data-speed="2900" aria-label="Product benefit rotator">
+              <div class="frame">
+                <span class="pimg p-kitchen on" role="img" aria-label="Purelane foaming kitchen cleaner" data-name="Kitchen cleaner" data-note="Foam lifts grease, no scrubbing"></span>
+                <span class="pimg p-tap" role="img" aria-label="Purelane tap cleaner and limescale remover" data-name="Tap &amp; limescale" data-note="Melts hard water stains"></span>
+                <span class="pimg p-laundry" role="img" aria-label="Purelane non-toxic laundry detergent" data-name="Laundry detergent" data-note="Tough on odour, soft on fabric"></span>
+                <span class="pimg p-toilet" role="img" aria-label="Purelane non-toxic toilet cleaner" data-name="Toilet cleaner" data-note="Kills 99.9% of germs"></span>
+                <span class="pimg p-floor" role="img" aria-label="Purelane natural herbal floor cleaner" data-name="Floor cleaner" data-note="Neem powered, pet safe"></span>
+                <span class="pimg p-dish" role="img" aria-label="Purelane organic dishwash liquid gel" data-name="Dishwash gel" data-note="Cuts grease, kind to hands"></span>
+              </div>
+              <div class="cap"><b>Kitchen cleaner</b><span>Foam lifts grease, no scrubbing</span></div>
+              <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+
+            <div class="glass-2 stats proof-stats" style="grid-column:1/-1">
+              <div class="stat"><div class="ring">99.9%</div><h5>Germ kill</h5><p>Tested against germs and bacteria</p></div>
+              <div class="stat"><div class="ring">0%</div><h5>Sulphates</h5><p>No SLS, chlorine or parabens</p></div>
+              <div class="stat"><div class="ring">100%</div><h5>Plant based</h5><p>Cleansers derived from plants</p></div>
+              <div class="stat"><div class="ring">4.8</div><h5>Rated</h5><p>Across 8,000+ verified reviews</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 03. BEST SELLING COMBOS ================= -->
+    <section class="sec" id="combos" data-scene="3" data-section-id="combos">
+      <div class="pl-wrap">
+        <div class="panel-head rv">
+          <span class="pl-kicker">Pre-built to save you money</span>
+          <h2 class="pl-d2" style="margin-top:12px">Best selling combos</h2>
+          <div class="rule"><i></i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg><i></i></div>
+          <p class="pl-lede" style="margin:14px auto 0">Swipe through the boxes people order most. Each one is already priced below buying the same products on their own.</p>
+        </div>
+
+        <div class="comborail rv">
+          <!-- Combo 1 -->
+          <article class="glass combo">
+            <div class="tray">
+              <span class="save">You save ₹398</span>
+              <span class="flag">Most popular</span>
+              <div class="stack">
+                <span class="it"><span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span><span>Cuts grease instantly</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-dish" role="img" aria-label="Dishwash gel"></span><span>Squeaky clean dishes</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span><span>Melts hard water stains</span></span>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Kitchen essentials</h3>
+              <div class="cnt">3 products</div>
+              <p class="inc">Includes: Foaming Kitchen Cleaner, Dishwash Gel &amp; Tap Cleaner. Everything for a sparkling kitchen, no need to pick separately.</p>
+              <div class="prow"><strong>₹499</strong><s>₹897</s><em>Save ₹398</em></div>
+              <div class="fine">Inclusive of all taxes &middot; COD available</div>
+              <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <!-- Combo 2 -->
+          <article class="glass combo">
+            <div class="tray">
+              <span class="save">You save ₹448</span>
+              <div class="stack">
+                <span class="it"><span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span><span>Removes tough stains &amp; odour</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg></span><span>Softens &amp; freshens every wash</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-wm" role="img" aria-label="Washing machine cleaner"></span><span>Deep-cleans your machine</span></span>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Laundry care bundle</h3>
+              <div class="cnt">3 products</div>
+              <p class="inc">Includes: Laundry Detergent, Fabric Conditioner &amp; Machine Cleaner Powder. Softer, fresher wash, all in one box.</p>
+              <div class="prow"><strong>₹499</strong><s>₹947</s><em>Save ₹448</em></div>
+              <div class="fine">Inclusive of all taxes &middot; COD available</div>
+              <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <!-- Combo 3 (HERO) -->
+          <article class="glass combo hero-combo">
+            <div class="tray">
+              <span class="save">Biggest saving</span>
+              <span class="flag">Best value</span>
+              <div class="stack">
+                <span class="it"><span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span><span>Cuts grease instantly</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-floor" role="img" aria-label="Floor cleaner"></span><span>Kills 99.9% germs</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-handwash" role="img" aria-label="Handwash"></span><span>Gentle hydration for hands</span></span>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Complete home bundle</h3>
+              <div class="cnt">5 products</div>
+              <p class="inc">Includes: Kitchen Cleaner, Laundry Detergent, Floor Cleaner, Toilet Cleaner &amp; Handwash. Our biggest saving box.</p>
+              <div class="prow"><strong>₹799</strong><s>₹1,495</s><em>Save ₹696</em></div>
+              <div class="fine">Inclusive of all taxes &middot; COD available</div>
+              <a class="btn btn-primary" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <!-- Combo 4 -->
+          <article class="glass combo">
+            <div class="tray">
+              <span class="save">You save ₹398</span>
+              <div class="stack">
+                <span class="it"><span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span><span>Kills 99.9% germs</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span><span>Melts hard water stains</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-eraser" role="img" aria-label="Magic eraser"></span><span>Scrubs away soap scum</span></span>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Bathroom deep clean</h3>
+              <div class="cnt">3 products</div>
+              <p class="inc">Includes: Toilet Cleaner, Tap Cleaner &amp; Magic Eraser. A complete bathroom refresh in one box.</p>
+              <div class="prow"><strong>₹499</strong><s>₹897</s><em>Save ₹398</em></div>
+              <div class="fine">Inclusive of all taxes &middot; COD available</div>
+              <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+
+          <!-- Combo 5 -->
+          <article class="glass combo">
+            <div class="tray">
+              <span class="save">You save ₹249</span>
+              <div class="stack">
+                <span class="it"><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span><span>Melts hard water stains</span></span>
+                <span class="plus" aria-hidden="true">+</span>
+                <span class="it"><span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span><span>Fights limescale in the bowl</span></span>
+              </div>
+            </div>
+            <div class="body">
+              <h3>Hard water solution kit</h3>
+              <div class="cnt">2 products</div>
+              <p class="inc">Includes: Tap Cleaner &amp; Toilet Cleaner. A quick, focused fix for hard water stains across the home.</p>
+              <div class="prow"><strong>₹349</strong><s>₹598</s><em>Save ₹249</em></div>
+              <div class="fine">Inclusive of all taxes &middot; COD available</div>
+              <a class="btn btn-ghost" href="#bundles">Shop bundle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg></a>
+            </div>
+          </article>
+        </div>
+
+        <div class="swipecue" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+          Swipe for more combos
+        </div>
+        <p class="railnote">Tapping "Shop bundle" opens the bundle picker with these products already added. You can still swap anything before you pay.</p>
+      </div>
+    </section>
+
+    <!-- ================= 04. BUNDLES (TIER PRICING) ================= -->
+    <section class="sec" id="bundles" data-scene="3" data-section-id="bundles">
+      <div class="pl-wrap">
+        <div class="glass sec-pad rv" style="margin-bottom:16px">
+          <div class="panel-head" style="margin-bottom:0">
+            <span class="pl-kicker">Build your bundle</span>
+            <h2 class="pl-d2" style="margin-top:12px">One box. Every room.</h2>
+            <p class="pl-lede" style="margin:0 auto">Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way.</p>
+          </div>
+        </div>
+
+        <div class="tiers">
+          <!-- Starter Tier -->
+          <article class="glass tier rv">
+            <span class="tag">Starter</span>
+            <div class="tierpix" aria-hidden="true"><span class="pimg p-combo2" role="img" aria-label="Purelane tap cleaner and kitchen cleaner combo pack"></span></div>
+            <div class="qty">2<small>Products</small></div>
+            <div class="price">₹349 <s>₹598</s></div>
+            <p class="pl-body-s" style="font-size:12px">Flat ₹174 per product</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any two products</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
+            </ul>
+            <a class="btn btn-ghost" href="#shop">Build this box</a>
+          </article>
+
+          <!-- Most Popular Tier -->
+          <article class="glass tier best rv rv-d2">
+            <span class="tag">Most popular</span>
+            <div class="tierpix" aria-hidden="true"><span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span><span class="pimg p-dish" role="img" aria-label="Dishwash gel"></span></div>
+            <div class="qty">3<small>Products</small></div>
+            <div class="price">₹499 <s>₹897</s></div>
+            <p class="pl-body-s" style="font-size:12px">Flat ₹166 per product</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any three products</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Covers kitchen and laundry</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
+            </ul>
+            <a class="btn btn-primary" href="#shop">Build this box
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13m-5-6 6 6-6 6"/></svg>
+            </a>
+          </article>
+
+          <!-- Whole Home Tier -->
+          <article class="glass tier rv rv-d3">
+            <span class="tag">Whole home</span>
+            <div class="tierpix five" aria-hidden="true"><span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span><span class="pimg p-floor" role="img" aria-label="Floor cleaner"></span><span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span><span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span></div>
+            <div class="qty">5<small>Products</small></div>
+            <div class="price">₹799 <s>₹1495</s></div>
+            <p class="pl-body-s" style="font-size:12px">Flat ₹160 per product</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Pick any five products</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Every room in one order</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>Free shipping across India</li>
+            </ul>
+            <a class="btn btn-ghost" href="#shop">Build this box</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 02. SHOP / PRODUCT GRID (WITH SEED TEST CASES) ================= -->
+    <section class="sec" id="shop" data-scene="3" data-section-id="shop">
+      <div class="pl-wrap">
+        <div class="panel-head rv">
+          <span class="pl-kicker">Bestsellers</span>
+          <h2 class="pl-d2" style="margin-top:12px">Loved by 30,000 homes</h2>
+          <div class="rule">
+            <i></i>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg>
+            <i></i>
+          </div>
+        </div>
+
+        <div class="shelf">
+          <!-- Product 1 (Active standard) -->
+          <article class="glass card rv">
+            <div class="shot"><span class="pill">Best seller</span><span class="pimg p-tap" role="img" aria-label="Tap cleaner and limescale remover spray with carton"></span></div>
+            <h4 class="card-title">Tap cleaner &amp; limescale remover</h4>
+            <div class="rate"><b>★ 4.8</b> · 237 reviews</div>
+            <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 2 (Active standard) -->
+          <article class="glass card rv rv-d1">
+            <div class="shot"><span class="pill">Best seller</span><span class="pimg p-kitchen" role="img" aria-label="Foaming kitchen cleaner spray with carton"></span></div>
+            <h4 class="card-title">Kitchen cleaner, foaming</h4>
+            <div class="rate"><b>★ 4.8</b> · 254 reviews</div>
+            <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 3 (Active standard) -->
+          <article class="glass card rv rv-d2">
+            <div class="shot"><span class="pill">Top rated</span><span class="pimg p-metal" role="img" aria-label="Copper, bronze and brass cleaner pump bottle with carton"></span></div>
+            <h4 class="card-title">Copper, bronze &amp; brass cleaner</h4>
+            <div class="rate"><b>★ 4.8</b> · 231 reviews</div>
+            <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 4 (Active standard) -->
+          <article class="glass card rv rv-d3">
+            <div class="shot"><span class="pill">New</span><span class="pimg p-wm" role="img" aria-label="Washing machine cleaner and descaler tablets carton"></span></div>
+            <h4 class="card-title">Washing machine cleaner &amp; descaler</h4>
+            <div class="rate"><b>★ 4.8</b> · 183 reviews</div>
+            <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 5 (Active standard) -->
+          <article class="glass card rv">
+            <div class="shot"><span class="pill">Best seller</span><span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span></div>
+            <h4 class="card-title">Non-toxic laundry detergent ultra fresh</h4>
+            <div class="rate"><b>★ 4.9</b> · 412 reviews</div>
+            <div class="pr"><strong>₹249</strong><s>₹349</s><em>29% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 6 (TEST CASE 1: SOLD OUT PRODUCT) -->
+          <article class="glass card rv rv-d1 is-soldout">
+            <div class="shot">
+              <span class="pill pill-soldout">Sold out</span>
+              <span class="pimg p-floor" role="img" aria-label="Natural herbal floor cleaner concentrate"></span>
+            </div>
+            <h4 class="card-title">Natural herbal floor cleaner concentrate</h4>
+            <div class="rate"><b>★ 4.8</b> · 195 reviews</div>
+            <div class="pr"><strong>₹220</strong><s>₹299</s><em>26% off</em></div>
+            <button class="btn btn-ghost btn-sm" disabled aria-disabled="true">Sold out</button>
+          </article>
+
+          <!-- Product 7 (TEST CASE 2: NO IMAGE / MISSING IMAGE SVG FALLBACK) -->
+          <article class="glass card rv rv-d2">
+            <div class="shot">
+              <span class="pill">New</span>
+              <!-- Branded Vector SVG Fallback -->
+              <svg viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="card-svg-fallback">
+                <ellipse cx="65" cy="190" rx="40" ry="7" fill="#01201c" opacity=".18"/>
+                <rect x="38" y="56" width="42" height="7" rx="3" fill="#a8bdb2"/>
+                <rect x="41" y="62" width="36" height="16" rx="4" fill="#8fa89b"/>
+                <path d="M28 96c0-11 6-18 15-24v-8h33v8c9 6 15 13 15 24v62c0 12-8 20-21 20H49c-13 0-21-8-21-20Z" fill="rgba(255,255,255,.5)" stroke="rgba(75,58,143,.18)" stroke-width="1.4"/>
+                <rect x="31" y="112" width="66" height="60" rx="6" fill="#4b3a8f"/>
+                <text x="64" y="140" text-anchor="middle" font-family="Outfit, sans-serif" font-size="8.6" font-weight="800" letter-spacing=".7" fill="#faf7fd">PURELANE</text>
+                <line x1="42" y1="146" x2="86" y2="146" stroke="#b8701c" stroke-width=".9" opacity=".85"/>
+                <text x="64" y="156" text-anchor="middle" font-family="Inter, sans-serif" font-size="6.4" font-weight="700" letter-spacing="1.1" fill="#ece6f7">NATURAL</text>
+                <text x="64" y="164" text-anchor="middle" font-family="Inter, sans-serif" font-size="6.4" font-weight="700" letter-spacing="1.1" fill="#ece6f7">DISINFECT</text>
+                <text x="64" y="171" text-anchor="middle" font-family="Inter, sans-serif" font-size="4.8" font-weight="600" letter-spacing=".9" fill="rgba(236,230,247,.7)">500 ML</text>
+              </svg>
+            </div>
+            <h4 class="card-title">Multi-surface disinfectant spray</h4>
+            <div class="rate"><b>★ 4.7</b> · 89 reviews</div>
+            <div class="pr"><strong>₹210</strong><s>₹299</s><em>30% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+
+          <!-- Product 8 (TEST CASE 3: VERY LONG TITLE WITH LINE-CLAMP RESILIENCE) -->
+          <article class="glass card rv rv-d3">
+            <div class="shot"><span class="pill">Top rated</span><span class="pimg p-dish" role="img" aria-label="Dishwash gel"></span></div>
+            <h4 class="card-title" title="Purelane Heavy Duty Botanical Deep Cleansing Formula For Commercial & Residential Greasy Stoves, Range Hoods, Ovens And Tiles">
+              Purelane Heavy Duty Botanical Deep Cleansing Formula For Commercial &amp; Residential Greasy Stoves, Range Hoods, Ovens And Tiles
+            </h4>
+            <div class="rate"><b>★ 4.9</b> · 142 reviews</div>
+            <div class="pr"><strong>₹399</strong><s>₹549</s><em>27% off</em></div>
+            <button class="btn btn-ghost btn-sm">Add to cart</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FULL RANGE ================= -->
+    <section class="sec" id="range" data-scene="3" data-section-id="range">
+      <div class="pl-wrap">
+        <div class="glass range rv">
+          <div class="range-head">
+            <div>
+              <span class="pl-kicker">The full range</span>
+              <h2 class="pl-d2" style="margin-top:10px">Every room, one shelf</h2>
+            </div>
+            <p class="pl-body-s" style="max-width:34ch;margin-bottom:4px">Floors, taps, kitchen, laundry, bathroom and hands. Fourteen plant-based formulas that replace every harsh bottle under your sink.</p>
+          </div>
+          <div class="stripwrap">
+            <div class="rangerow">
+              <span class="pimg p-floor" role="img" aria-label="Floor cleaner"></span>
+              <span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span>
+              <span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span>
+              <span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span>
+              <span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span>
+              <span class="pimg p-dish" role="img" aria-label="Dishwash gel"></span>
+              <span class="pimg p-metal" role="img" aria-label="Metal cleaner"></span>
+              <span class="pimg p-wm" role="img" aria-label="Washing machine cleaner"></span>
+              <span class="pimg p-handwash" role="img" aria-label="Liquid handwash"></span>
+              <span class="pimg p-eraser" role="img" aria-label="Magic eraser"></span>
+            </div>
+          </div>
+          <p class="striphint">Swipe to see the full shelf</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WHY BUNDLES BEAT SINGLE ================= -->
+    <section class="sec" id="whybundles" data-scene="4" data-section-id="whybundles">
+      <div class="pl-wrap">
+        <div class="glass sec-pad rv">
+          <div class="panel-head">
+            <span class="pl-kicker">The smarter way to shop</span>
+            <h2 class="pl-d2" style="margin-top:12px">Why bundles beat buying single</h2>
+          </div>
+          <div class="wb">
+            <div class="wb-i"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M16.5 7.2C15.6 6 14 5.4 12 5.4c-2.4 0-4 1.1-4 2.9 0 2 1.7 2.7 4.2 3.3 2.7.6 4.3 1.4 4.3 3.4 0 1.9-1.7 3.1-4.5 3.1-2.2 0-3.8-.7-4.8-2"/></svg></span><h4>Save up to 45%</h4><p>Versus buying the same products separately</p></div>
+            <div class="wb-i"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3.4"/><path d="m8.4 12.2 2.4 2.4 4.8-5"/></svg></span><h4>One flat price</h4><p>No calculators, no comparing carts</p></div>
+            <div class="wb-i"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8Z"/></svg></span><h4>Curated by experts</h4><p>Products picked to work well together</p></div>
+            <div class="wb-i"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 16.4V7.2h10.2v9.2"/><path d="M12.8 10.4h4l3.6 3.2v2.8h-7.6"/><circle cx="6.6" cy="18" r="1.9"/><circle cx="16.6" cy="18" r="1.9"/></svg></span><h4>Free shipping always</h4><p>Included on every bundle, all India</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BUNDLE CATEGORIES ================= -->
+    <section class="sec" id="categories" data-scene="4" data-section-id="categories">
+      <div class="pl-wrap">
+        <div class="panel-head rv">
+          <span class="pl-kicker">Bundle categories</span>
+          <h2 class="pl-d2" style="margin-top:12px">Find the right bundle for you</h2>
+        </div>
+        <div class="cats">
+          <a class="glass cat rv" href="#combos"><span class="ph"><span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span></span><span class="txt"><h4>Kitchen bundle</h4><p>Grease, dishes &amp; more</p></span></a>
+          <a class="glass cat rv rv-d1" href="#combos"><span class="ph"><span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span></span><span class="txt"><h4>Bathroom bundle</h4><p>Deep clean &amp; disinfect</p></span></a>
+          <a class="glass cat rv rv-d2" href="#combos"><span class="ph"><span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span></span><span class="txt"><h4>Laundry bundle</h4><p>Softer, fresher wash</p></span></a>
+          <a class="glass cat rv rv-d3" href="#combos"><span class="ph"><span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span></span><span class="txt"><h4>Hard water bundle</h4><p>Melt away limescale</p></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TRUST BAR ================= -->
+    <section class="sec" data-scene="4" data-section-id="trust">
+      <div class="pl-wrap">
+        <div class="glass trust rv">
+          <div class="trust-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/></svg><span>Plant derived<br>formulas</span></div>
+          <div class="trust-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 8 6.5 3h11L20 8M9.5 12h5"/></svg><span>Recyclable<br>packaging</span></div>
+          <div class="trust-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.4A4.1 4.1 0 0 1 12 8a4.1 4.1 0 0 1 7 2.6c0 5-7 9.4-7 9.4Z"/></svg><span>Safe for<br>kids &amp; pets</span></div>
+          <div class="trust-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.4 2.4 3.6 5.4 3.6 8.6S14.4 18.2 12 20.6c-2.4-2.4-3.6-5.4-3.6-8.6S9.6 5.8 12 3.4Z"/></svg><span>Made in<br>India</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SIGNUP / NEWSLETTER ================= -->
+    <section class="sec" data-scene="4" data-section-id="newsletter">
+      <div class="pl-wrap">
+        <div class="glass signup rv">
+          <span class="pl-kicker">Join the Purelane Club</span>
+          <h2 class="pl-d2" style="margin-top:12px">Get ₹100 off your first bundle</h2>
+          <p class="pl-lede" style="margin:0 auto">Plus first access to new launches and restocks.</p>
+          <form onsubmit="alert('Thank you for joining Purelane Club! Code: PURE100'); return false;">
+            <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+            <button class="btn btn-primary" type="submit">Get my ₹100 off</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="pl-footer" data-scene="4" data-section-id="footer">
+    <div class="pl-wrap">
+      <div class="fgrid">
+        <div class="fcol">
+          <a class="pl-brand" href="#top" style="margin-bottom:16px" aria-label="Purelane Home">
+            <span class="mark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#b8701c"><path d="M12 21c0-6.5 3.5-11 8-12.5C20 15 16.5 20 12 21Z"/><path d="M12 21C12 14.5 8.5 10 4 8.5 4 15 7.5 20 12 21Z"/><path d="M12 21v-6"/></svg>
+            </span>
+            <span class="txt"><span class="n1">Purelane</span><span class="n2">Clean, simply</span></span>
+          </a>
+          <p style="max-width:30ch">Effective cleaning, powered by nature. Made for Indian homes since day one.</p>
+        </div>
+        <div class="fcol">
+          <h5>Shop</h5>
+          <a href="#shop">Bestsellers</a>
+          <a href="#shop">Kitchen</a>
+          <a href="#shop">Laundry</a>
+          <a href="#shop">Home</a>
+          <a href="#shop">Skin</a>
+          <a href="#bundles">Starter kits</a>
+        </div>
+        <div class="fcol">
+          <h5>About</h5>
+          <a href="#how">How it works</a>
+          <a href="#ingredients">Sustainability</a>
+          <a href="#proof">FAQs</a>
+          <a href="#reviews">Reviews</a>
+        </div>
+        <div class="fcol">
+          <h5>Get in touch</h5>
+          <a href="mailto:hello@purelane.com">hello@purelane.com</a>
+          <a href="tel:+919930123234">+91 9930 123 234</a>
+          <p style="font-size:12px;color:var(--pl-paper-3);margin-top:4px;">Purelane Eco Products Pvt Ltd</p>
+        </div>
+      </div>
+      <div class="fbot">
+        <span>© 2026 Purelane Eco Products Private Limited</span>
+        <span>Privacy · Terms · Refunds · Contact</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= STICKY MOBILE CTA ================= -->
+  <div class="sticky">
+    <span class="lbl"><b>Pick any 3, pay ₹499</b><span>Free shipping, always</span></span>
+    <a class="btn btn-primary btn-sm" href="#bundles">Build bundle</a>
+  </div>
+
+  <script src="../assets/purelane.js"></script>
+  <script>
+    function simulateThemeEditorReload() {
+      console.log('Simulating shopify:section:load on hero...');
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        document.dispatchEvent(new CustomEvent('shopify:section:load', { target: hero }));
+      }
+      const rot = document.querySelector('.rot');
+      if (rot) {
+        document.dispatchEvent(new CustomEvent('shopify:section:load', { target: rot }));
+      }
+    }
+
+    let reducedMotionActive = false;
+    function toggleMotionPreference() {
+      reducedMotionActive = !reducedMotionActive;
+      document.documentElement.style.setProperty('--reduce-motion', reducedMotionActive ? '1' : '0');
+      alert(reducedMotionActive ? 'Reduced motion enabled' : 'Reduced motion disabled');
+    }
+  </script>
+</body>
+</html>
