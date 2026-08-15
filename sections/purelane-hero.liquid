@@ -1,0 +1,439 @@
+{% comment %}
+  Purelane Hero Section
+  Interactive hero banner with animated reveals, promise badges, and a 3-slide product stage.
+{% endcomment %}
+
+<section class="hero" id="top" data-scene="1" data-section-id="{{ section.id }}">
+  <div class="hero-grid">
+
+    {%- comment -%} Desktop Badges Rail {%- endcomment -%}
+    <div class="badges glass-2" aria-label="{{ section.settings.badge_rail_label | default: 'Product promises' }}">
+      {% for block in section.blocks %}
+        {% if block.type == 'badge' %}
+          <div class="badge" {{ block.shopify_attributes }}>
+            <span class="bi">
+              {% render 'purelane-svg-icons', name: block.settings.icon %}
+            </span>
+            <span>{{ block.settings.text | newline_to_br }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {%- comment -%} Hero Copy & Action CTAs {%- endcomment -%}
+    <div class="hero-copy">
+      <h1 class="pl-d1 rv in">
+        {{ section.settings.heading_line_1 }}<br>
+        {{ section.settings.heading_line_2 }}<br>
+        <span class="pl-lime">{{ section.settings.heading_highlight }}</span>
+      </h1>
+
+      <div class="rule rv rv-d1">
+        <i></i>
+        {% render 'purelane-svg-icons', name: 'leaf' %}
+        <i></i>
+      </div>
+
+      <p class="pl-lede rv rv-d2">{{ section.settings.subheading }}</p>
+
+      <div class="hero-cta rv rv-d3">
+        {% if section.settings.primary_cta_label != blank %}
+          <a class="btn btn-primary" href="{{ section.settings.primary_cta_link | default: '#shop' }}">
+            {{ section.settings.primary_cta_label }}
+            {% render 'purelane-svg-icons', name: 'arrow-right' %}
+          </a>
+        {% endif %}
+
+        {% if section.settings.secondary_cta_label != blank %}
+          <a class="btn btn-ghost" href="{{ section.settings.secondary_cta_link | default: '#how' }}">
+            {{ section.settings.secondary_cta_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Mobile Badges Strip {%- endcomment -%}
+      <div class="badgestrip rv rv-d4">
+        {% for block in section.blocks %}
+          {% if block.type == 'badge' %}
+            <div class="glass-2">
+              {% render 'purelane-svg-icons', name: block.settings.icon %}
+              {{ block.settings.mobile_text | default: block.settings.text | replace: '<br>', ' ' }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    {%- comment -%} Hero Dynamic Product Stage {%- endcomment -%}
+    <div class="hero-prod" id="heroProd">
+      <div class="hstage" id="hstage" data-autoplay-speed="{{ section.settings.autoplay_speed | default: 3800 }}">
+        {% assign slide_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'stage_slide' %}
+            {% liquid
+              assign p1 = block.settings.product_1
+              assign p2 = block.settings.product_2
+              assign p3 = block.settings.product_3
+
+              assign price_display = block.settings.price_override
+              assign compare_display = block.settings.compare_price_override
+
+              if price_display == blank and p1 != blank
+                assign price_display = p1.price | money_without_trailing_zeros
+                if p1.compare_at_price > p1.price
+                  assign compare_display = p1.compare_at_price | money_without_trailing_zeros
+                endif
+              endif
+            %}
+
+            <div class="hslide hs{{ block.settings.slide_layout }}{% if slide_index == 0 %} on{% endif %}" data-n="{{ slide_index | plus: 1 }}" data-slide-index="{{ slide_index }}" {{ block.shopify_attributes }}>
+              
+              {%- comment -%} Product Position A {%- endcomment -%}
+              {% if block.settings.image_1 != blank %}
+                <img src="{{ block.settings.image_1 | image_url: width: 440 }}" alt="{{ block.settings.image_1.alt | escape }}" class="hp a d1 hp-img" loading="eager" width="220" height="340">
+              {% elsif p1 != blank and p1.featured_image != blank %}
+                <img src="{{ p1.featured_image | image_url: width: 440 }}" alt="{{ p1.title | escape }}" class="hp a d1 hp-img" loading="eager" width="220" height="340">
+              {% else %}
+                <span class="hp {{ block.settings.silhouette_1 | default: 'p-kbtl' }} a d1" role="img" aria-label="{{ p1.title | default: 'Purelane bottle' | escape }}"></span>
+              {% endif %}
+
+              {%- comment -%} Product Position B {%- endcomment -%}
+              {% if block.settings.slide_layout == '2' or block.settings.slide_layout == '3' %}
+                {% if block.settings.image_2 != blank %}
+                  <img src="{{ block.settings.image_2 | image_url: width: 440 }}" alt="{{ block.settings.image_2.alt | escape }}" class="hp b d2 hp-img" loading="eager" width="220" height="340">
+                {% elsif p2 != blank and p2.featured_image != blank %}
+                  <img src="{{ p2.featured_image | image_url: width: 440 }}" alt="{{ p2.title | escape }}" class="hp b d2 hp-img" loading="eager" width="220" height="340">
+                {% else %}
+                  <span class="hp {{ block.settings.silhouette_2 | default: 'p-tbtl' }} b d2" role="img" aria-label="{{ p2.title | default: 'Purelane bottle' | escape }}"></span>
+                {% endif %}
+              {% endif %}
+
+              {%- comment -%} Product Position C {%- endcomment -%}
+              {% if block.settings.slide_layout == '3' %}
+                {% if block.settings.image_3 != blank %}
+                  <img src="{{ block.settings.image_3 | image_url: width: 440 }}" alt="{{ block.settings.image_3.alt | escape }}" class="hp c d3 hp-img" loading="eager" width="220" height="340">
+                {% elsif p3 != blank and p3.featured_image != blank %}
+                  <img src="{{ p3.featured_image | image_url: width: 440 }}" alt="{{ p3.title | escape }}" class="hp c d3 hp-img" loading="eager" width="220" height="340">
+                {% else %}
+                  <span class="hp {{ block.settings.silhouette_3 | default: 'p-mbtl' }} c d3" role="img" aria-label="{{ p3.title | default: 'Purelane bottle' | escape }}"></span>
+                {% endif %}
+              {% endif %}
+
+              {%- comment -%} Glass Price Flag {%- endcomment -%}
+              <div class="glass-2 ptag">
+                <span class="lbl">{{ block.settings.tag_label }}</span>
+                <span class="val">
+                  <strong>{{ price_display | default: '₹200' }}</strong>
+                  {% if compare_display != blank %}
+                    <s>{{ compare_display }}</s>
+                  {% endif %}
+                </span>
+                {% if block.settings.savings_badge != blank %}
+                  <span class="cut">{{ block.settings.savings_badge }}</span>
+                {% endif %}
+              </div>
+            </div>
+            {% assign slide_index = slide_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="hdots" id="hdots">
+        {% assign dot_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'stage_slide' %}
+            <button type="button" class="{% if dot_index == 0 %}on{% endif %}" aria-label="Show slide {{ dot_index | plus: 1 }}"></button>
+            {% assign dot_index = dot_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Hero",
+  "tag": "section",
+  "class": "section-purelane-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "Clean"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2",
+      "default": "That"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading Highlight (Accent)",
+      "default": "Lasts"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading / Lede Text",
+      "default": "Homecare that works on the toughest grime, made from plants. Kind to your home, your family and the world outside it."
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_label",
+      "label": "Primary Button Label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_label",
+      "label": "Secondary Button Label",
+      "default": "How it works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Stage Autoplay Speed (ms)",
+      "min": 2000,
+      "max": 8000,
+      "step": 200,
+      "default": 3800
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Promise Badge",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Plant / Leaf" },
+            { "value": "shield", "label": "Shield / Safe" },
+            { "value": "ban", "label": "Zero Chemicals" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Badge Text (Desktop)",
+          "default": "Plant\npowered"
+        },
+        {
+          "type": "text",
+          "id": "mobile_text",
+          "label": "Badge Text (Mobile)",
+          "default": "Plant powered"
+        }
+      ]
+    },
+    {
+      "type": "stage_slide",
+      "name": "Stage Product Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "slide_layout",
+          "label": "Slide Layout Type",
+          "options": [
+            { "value": "1", "label": "1 Product (Single bottle)" },
+            { "value": "2", "label": "2 Products (Duo)" },
+            { "value": "3", "label": "3 Products (Trio Combo)" }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "tag_label",
+          "label": "Package Tag Label",
+          "default": "Single bottle"
+        },
+        {
+          "type": "text",
+          "id": "price_override",
+          "label": "Price Display (e.g. ₹200)",
+          "default": "₹200"
+        },
+        {
+          "type": "text",
+          "id": "compare_price_override",
+          "label": "Compare Price Display (e.g. ₹299)",
+          "default": "₹299"
+        },
+        {
+          "type": "text",
+          "id": "savings_badge",
+          "label": "Savings Badge (e.g. 33% off)",
+          "default": "33% off"
+        },
+        {
+          "type": "header",
+          "content": "Product 1 (Center / Primary)"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Custom Image 1 (Optional)"
+        },
+        {
+          "type": "select",
+          "id": "silhouette_1",
+          "label": "Silhouette Fallback 1",
+          "options": [
+            { "value": "p-kbtl", "label": "Kitchen Cleaner Spray" },
+            { "value": "p-tbtl", "label": "Tap Cleaner Spray" },
+            { "value": "p-mbtl", "label": "Metal Cleaner Pump" },
+            { "value": "p-floor", "label": "Floor Cleaner" },
+            { "value": "p-dish", "label": "Dishwash Gel" }
+          ],
+          "default": "p-kbtl"
+        },
+        {
+          "type": "header",
+          "content": "Product 2 (For Duo & Trio)"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Custom Image 2 (Optional)"
+        },
+        {
+          "type": "select",
+          "id": "silhouette_2",
+          "label": "Silhouette Fallback 2",
+          "options": [
+            { "value": "p-kbtl", "label": "Kitchen Cleaner Spray" },
+            { "value": "p-tbtl", "label": "Tap Cleaner Spray" },
+            { "value": "p-mbtl", "label": "Metal Cleaner Pump" },
+            { "value": "p-floor", "label": "Floor Cleaner" },
+            { "value": "p-dish", "label": "Dishwash Gel" }
+          ],
+          "default": "p-tbtl"
+        },
+        {
+          "type": "header",
+          "content": "Product 3 (For Trio)"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Custom Image 3 (Optional)"
+        },
+        {
+          "type": "select",
+          "id": "silhouette_3",
+          "label": "Silhouette Fallback 3",
+          "options": [
+            { "value": "p-kbtl", "label": "Kitchen Cleaner Spray" },
+            { "value": "p-tbtl", "label": "Tap Cleaner Spray" },
+            { "value": "p-mbtl", "label": "Metal Cleaner Pump" },
+            { "value": "p-floor", "label": "Floor Cleaner" },
+            { "value": "p-dish", "label": "Dishwash Gel" }
+          ],
+          "default": "p-mbtl"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Hero",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "leaf",
+            "text": "Plant\npowered",
+            "mobile_text": "Plant powered"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "shield",
+            "text": "Safe for\nkids & pets",
+            "mobile_text": "Kids & pet safe"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "ban",
+            "text": "Zero harsh\nchemicals",
+            "mobile_text": "Zero harsh chem"
+          }
+        },
+        {
+          "type": "stage_slide",
+          "settings": {
+            "slide_layout": "1",
+            "tag_label": "Single bottle",
+            "price_override": "₹200",
+            "compare_price_override": "₹299",
+            "savings_badge": "33% off",
+            "silhouette_1": "p-kbtl"
+          }
+        },
+        {
+          "type": "stage_slide",
+          "settings": {
+            "slide_layout": "2",
+            "tag_label": "Any 2 products",
+            "price_override": "₹349",
+            "compare_price_override": "₹598",
+            "savings_badge": "Save ₹249",
+            "silhouette_1": "p-tbtl",
+            "silhouette_2": "p-kbtl"
+          }
+        },
+        {
+          "type": "stage_slide",
+          "settings": {
+            "slide_layout": "3",
+            "tag_label": "Any 3 products",
+            "price_override": "₹499",
+            "compare_price_override": "₹897",
+            "savings_badge": "Save ₹398",
+            "silhouette_1": "p-tbtl",
+            "silhouette_2": "p-mbtl",
+            "silhouette_3": "p-kbtl"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

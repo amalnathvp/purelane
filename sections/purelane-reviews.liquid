@@ -1,0 +1,192 @@
+{% comment %}
+  Purelane Reviews Rail Section
+  Smooth infinite auto-scrolling marquee with aggregate rating header and verified customer testimonials.
+{% endcomment %}
+
+<section class="sec revband" id="reviews" data-scene="1" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="revhead rv">
+      {% if section.settings.kicker != blank %}
+        <span class="pl-kicker">{{ section.settings.kicker }}</span>
+      {% endif %}
+      <span class="agg">
+        <span class="st">{{ section.settings.stars | default: '★★★★★' }}</span> 
+        <b>{{ section.settings.rating_score | default: '4.8' }}</b> {{ section.settings.rating_count_text | default: 'from 8,000+ reviews' }}
+      </span>
+      {% if section.settings.social_proof != blank %}
+        <span class="agg">{{ section.settings.social_proof }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="revrail rv" aria-label="{{ section.settings.rail_aria_label | default: 'Customer reviews' }}">
+    <div class="revtrack" style="animation-duration: {{ section.settings.speed | default: 52 }}s">
+      {%- comment -%} Render cards twice to create a seamless infinite marquee {%- endcomment -%}
+      {% for repeat in (1..2) %}
+        {% for block in section.blocks %}
+          {% if block.type == 'review' %}
+            <article class="glass-2 rcard" {{ block.shopify_attributes }}>
+              <div class="st">{{ block.settings.stars | default: '★★★★★' }}</div>
+              <h5>{{ block.settings.title }}</h5>
+              <p>{{ block.settings.quote }}</p>
+              <div class="who">
+                {% if block.settings.is_verified %}
+                  {% render 'purelane-svg-icons', name: 'check' %}
+                {% endif %}
+                <b>{{ block.settings.author }}</b>
+                {% if block.settings.product_tag != blank %}
+                  <span>&middot; {{ block.settings.product_tag }}</span>
+                {% endif %}
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Reviews Rail",
+  "tag": "section",
+  "class": "section-purelane-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "That's what they said"
+    },
+    {
+      "type": "text",
+      "id": "stars",
+      "label": "Star Rating Display",
+      "default": "★★★★★"
+    },
+    {
+      "type": "text",
+      "id": "rating_score",
+      "label": "Aggregate Rating Score",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "rating_count_text",
+      "label": "Review Count Text",
+      "default": "from 8,000+ reviews"
+    },
+    {
+      "type": "text",
+      "id": "social_proof",
+      "label": "Social Proof Tagline",
+      "default": "Loved by 12 lakh+ homes"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Marquee Loop Duration (seconds)",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stars",
+          "label": "Stars",
+          "default": "★★★★★"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review Headline",
+          "default": "Works like a charm"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Body",
+          "default": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_verified",
+          "label": "Verified Buyer Badge",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Anita"
+        },
+        {
+          "type": "text",
+          "id": "product_tag",
+          "label": "Product Tag / Association",
+          "default": "Laundry detergent"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Reviews Rail",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "title": "Works like a charm",
+            "quote": "Finally an eco option that cleans as well as the chemical detergent I used for years, and it smells better.",
+            "author": "Anita",
+            "product_tag": "Laundry detergent"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Best dishwash ever",
+            "quote": "Our old dishwash left my help with dry, cracked skin. That stopped completely after we switched.",
+            "author": "Priya",
+            "product_tag": "Dishwash gel"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Great product, great packaging",
+            "quote": "Very soft on hands with a lovely fragrance, and it feels good to be using far less plastic.",
+            "author": "Sunita",
+            "product_tag": "Liquid handwash"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Dog friendly",
+            "quote": "We switched because chemical floor cleaners were setting off my dog's allergies. No reactions since.",
+            "author": "Rohit S.",
+            "product_tag": "Floor cleaner"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "title": "Sparkling taps again",
+            "quote": "Hard water had ruined our bathroom fittings. Two sprays and the scale wipes straight off, no scrubbing.",
+            "author": "Verified buyer",
+            "product_tag": "Tap cleaner"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

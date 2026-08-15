@@ -1,0 +1,273 @@
+{% comment %}
+  Purelane Bundles / Tier Pricing Section
+  3-Tier bundle pricing cards (Starter, Most Popular, Whole Home) with product counts and feature checklists.
+{% endcomment %}
+
+<section class="sec" id="bundles" data-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass sec-pad rv" style="margin-bottom:16px">
+      <div class="panel-head" style="margin-bottom:0">
+        {% if section.settings.kicker != blank %}
+          <span class="pl-kicker">{{ section.settings.kicker }}</span>
+        {% endif %}
+        <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+        {% if section.settings.subheading != blank %}
+          <p class="pl-lede" style="margin:0 auto">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="tiers">
+      {% for block in section.blocks %}
+        {% if block.type == 'tier_card' %}
+          {% liquid
+            assign is_popular = block.settings.is_popular
+            assign delay_class = ''
+            if forloop.index == 2
+              assign delay_class = 'rv-d2'
+            elsif forloop.index == 3
+              assign delay_class = 'rv-d3'
+            endif
+          %}
+
+          <article class="glass tier{% if is_popular %} best{% endif %} rv {{ delay_class }}" {{ block.shopify_attributes }}>
+            <span class="tag">{{ block.settings.tag_label }}</span>
+
+            <div class="tierpix{% if block.settings.is_five_pack %} five{% endif %}" aria-hidden="true">
+              {% if block.settings.custom_image != blank %}
+                <img src="{{ block.settings.custom_image | image_url: width: 240 }}" alt="{{ block.settings.custom_image.alt | escape }}" loading="lazy" height="62">
+              {% else %}
+                {% case block.settings.preview_preset %}
+                  {% when 'starter' %}
+                    <span class="pimg p-combo2" role="img" aria-label="Combo 2 pack"></span>
+                  {% when 'trio' %}
+                    <span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span>
+                    <span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span>
+                    <span class="pimg p-dish" role="img" aria-label="Dishwash gel"></span>
+                  {% when 'whole_home' %}
+                    <span class="pimg p-kitchen" role="img" aria-label="Kitchen cleaner"></span>
+                    <span class="pimg p-tap" role="img" aria-label="Tap cleaner"></span>
+                    <span class="pimg p-floor" role="img" aria-label="Floor cleaner"></span>
+                    <span class="pimg p-toilet" role="img" aria-label="Toilet cleaner"></span>
+                    <span class="pimg p-laundry" role="img" aria-label="Laundry detergent"></span>
+                {% endcase %}
+              {% endif %}
+            </div>
+
+            <div class="qty">{{ block.settings.product_count }}<small>{{ block.settings.unit_label | default: 'Products' }}</small></div>
+            <div class="price">
+              {{ block.settings.price }}
+              {% if block.settings.compare_price != blank %}
+                <s>{{ block.settings.compare_price }}</s>
+              {% endif %}
+            </div>
+            
+            {% if block.settings.per_product_note != blank %}
+              <p class="pl-body-s" style="font-size:12px">{{ block.settings.per_product_note }}</p>
+            {% endif %}
+
+            <ul>
+              {% if block.settings.feature_1 != blank %}
+                <li>{% render 'purelane-svg-icons', name: 'check' %}{{ block.settings.feature_1 }}</li>
+              {% endif %}
+              {% if block.settings.feature_2 != blank %}
+                <li>{% render 'purelane-svg-icons', name: 'check' %}{{ block.settings.feature_2 }}</li>
+              {% endif %}
+              {% if block.settings.feature_3 != blank %}
+                <li>{% render 'purelane-svg-icons', name: 'check' %}{{ block.settings.feature_3 }}</li>
+              {% endif %}
+            </ul>
+
+            <a class="btn {% if is_popular %}btn-primary{% else %}btn-ghost{% endif %}" href="{{ block.settings.cta_link | default: '#shop' }}">
+              {{ block.settings.cta_label | default: 'Build this box' }}
+              {% if is_popular %}
+                {% render 'purelane-svg-icons', name: 'arrow-right' %}
+              {% endif %}
+            </a>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Bundles",
+  "tag": "section",
+  "class": "section-purelane-bundles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "Build your bundle"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "One box. Every room."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Mix and match across kitchen, laundry, home and skin. One flat price, no code needed, free shipping either way."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier_card",
+      "name": "Pricing Tier",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_popular",
+          "label": "Highlight as Most Popular",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag_label",
+          "label": "Top Badge Tag",
+          "default": "Starter"
+        },
+        {
+          "type": "text",
+          "id": "product_count",
+          "label": "Product Quantity Number",
+          "default": "2"
+        },
+        {
+          "type": "text",
+          "id": "unit_label",
+          "label": "Unit Label",
+          "default": "Products"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price Display",
+          "default": "₹349"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Compare Price Display",
+          "default": "₹598"
+        },
+        {
+          "type": "text",
+          "id": "per_product_note",
+          "label": "Per Product Note",
+          "default": "Flat ₹174 per product"
+        },
+        {
+          "type": "select",
+          "id": "preview_preset",
+          "label": "Product Preview Preset",
+          "options": [
+            { "value": "starter", "label": "2 Products Silhouette" },
+            { "value": "trio", "label": "3 Products Silhouette" },
+            { "value": "whole_home", "label": "5 Products Silhouette" }
+          ],
+          "default": "starter"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_five_pack",
+          "label": "Five-Pack Preview Tight Spacing",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Preview Image (Optional)"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Checklist Feature 1",
+          "default": "Pick any two products"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Checklist Feature 2",
+          "default": "Free shipping across India"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Checklist Feature 3"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA Button Label",
+          "default": "Build this box"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Bundles",
+      "blocks": [
+        {
+          "type": "tier_card",
+          "settings": {
+            "is_popular": false,
+            "tag_label": "Starter",
+            "product_count": "2",
+            "price": "₹349",
+            "compare_price": "₹598",
+            "per_product_note": "Flat ₹174 per product",
+            "preview_preset": "starter",
+            "feature_1": "Pick any two products",
+            "feature_2": "Free shipping across India"
+          }
+        },
+        {
+          "type": "tier_card",
+          "settings": {
+            "is_popular": true,
+            "tag_label": "Most popular",
+            "product_count": "3",
+            "price": "₹499",
+            "compare_price": "₹897",
+            "per_product_note": "Flat ₹166 per product",
+            "preview_preset": "trio",
+            "feature_1": "Pick any three products",
+            "feature_2": "Covers kitchen and laundry",
+            "feature_3": "Free shipping across India"
+          }
+        },
+        {
+          "type": "tier_card",
+          "settings": {
+            "is_popular": false,
+            "tag_label": "Whole home",
+            "product_count": "5",
+            "is_five_pack": true,
+            "price": "₹799",
+            "compare_price": "₹1495",
+            "per_product_note": "Flat ₹160 per product",
+            "preview_preset": "whole_home",
+            "feature_1": "Pick any five products",
+            "feature_2": "Every room in one order",
+            "feature_3": "Free shipping across India"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

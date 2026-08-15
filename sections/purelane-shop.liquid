@@ -1,0 +1,179 @@
+{% comment %}
+  Purelane Shop / Product Grid Section
+  Renders curated collection products or custom product blocks with fallback cards.
+{% endcomment %}
+
+<section class="sec" id="shop" data-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="panel-head rv">
+      {% if section.settings.kicker != blank %}
+        <span class="pl-kicker">{{ section.settings.kicker }}</span>
+      {% endif %}
+      <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+      <div class="rule">
+        <i></i>
+        {% render 'purelane-svg-icons', name: 'leaf' %}
+        <i></i>
+      </div>
+    </div>
+
+    <div class="shelf">
+      {% liquid
+        assign has_content = false
+        assign block_count = section.blocks.size
+      %}
+
+      {% if block_count > 0 %}
+        {% assign has_content = true %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign delay_mod = forloop.index0 | modulo: 4
+            assign delay_class = ''
+            if delay_mod > 0
+              assign delay_class = 'rv-d' | append: delay_mod
+            endif
+          %}
+          {% if block.settings.product != blank %}
+            {% render 'purelane-card-product', 
+              product: block.settings.product, 
+              custom_badge: block.settings.custom_badge, 
+              delay_class: delay_class 
+            %}
+          {% else %}
+            {%- comment -%} Fallback for empty block {%- endcomment -%}
+            <article class="glass card rv {{ delay_class }}" {{ block.shopify_attributes }}>
+              <div class="shot">
+                <span class="pill">{{ block.settings.custom_badge | default: 'Featured' }}</span>
+                {% render 'purelane-svg-icons', name: 'fallback-bottle' %}
+              </div>
+              <h4 class="card-title">{{ block.settings.title | default: 'Purelane Formula' }}</h4>
+              <div class="rate"><b>★ 4.8</b> · 240 reviews</div>
+              <div class="pr"><strong>{{ block.settings.price | default: '₹200' }}</strong><s>₹299</s><em>33% off</em></div>
+              <button class="btn btn-ghost btn-sm">Add to cart</button>
+            </article>
+          {% endif %}
+        {% endfor %}
+      {% elsif section.settings.collection != blank and section.settings.collection.products.size > 0 %}
+        {% assign has_content = true %}
+        {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+          {% liquid
+            assign delay_mod = forloop.index0 | modulo: 4
+            assign delay_class = ''
+            if delay_mod > 0
+              assign delay_class = 'rv-d' | append: delay_mod
+            endif
+          %}
+          {% render 'purelane-card-product', product: product, delay_class: delay_class %}
+        {% endfor %}
+      {% endif %}
+
+      {% unless has_content %}
+        {%- comment -%} Demo Fallback matching prototype {%- endcomment -%}
+        <article class="glass card rv">
+          <div class="shot"><span class="pill">Best seller</span><span class="pimg p-tap" role="img" aria-label="Tap cleaner and limescale remover spray with carton"></span></div>
+          <h4 class="card-title">Tap cleaner &amp; limescale remover</h4>
+          <div class="rate"><b>★ 4.8</b> · 237 reviews</div>
+          <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+          <button class="btn btn-ghost btn-sm">Add to cart</button>
+        </article>
+        <article class="glass card rv rv-d1">
+          <div class="shot"><span class="pill">Best seller</span><span class="pimg p-kitchen" role="img" aria-label="Foaming kitchen cleaner spray with carton"></span></div>
+          <h4 class="card-title">Kitchen cleaner, foaming</h4>
+          <div class="rate"><b>★ 4.8</b> · 254 reviews</div>
+          <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+          <button class="btn btn-ghost btn-sm">Add to cart</button>
+        </article>
+        <article class="glass card rv rv-d2">
+          <div class="shot"><span class="pill">Top rated</span><span class="pimg p-metal" role="img" aria-label="Copper, bronze and brass cleaner pump bottle with carton"></span></div>
+          <h4 class="card-title">Copper, bronze &amp; brass cleaner</h4>
+          <div class="rate"><b>★ 4.8</b> · 231 reviews</div>
+          <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+          <button class="btn btn-ghost btn-sm">Add to cart</button>
+        </article>
+        <article class="glass card rv rv-d3">
+          <div class="shot"><span class="pill">New</span><span class="pimg p-wm" role="img" aria-label="Washing machine cleaner and descaler tablets carton"></span></div>
+          <h4 class="card-title">Washing machine cleaner &amp; descaler</h4>
+          <div class="rate"><b>★ 4.8</b> · 183 reviews</div>
+          <div class="pr"><strong>₹200</strong><s>₹299</s><em>33% off</em></div>
+          <button class="btn btn-ghost btn-sm">Add to cart</button>
+        </article>
+      {% endunless %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Product Grid",
+  "tag": "section",
+  "class": "section-purelane-shop",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Loved by 30,000 homes"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show from collection",
+      "min": 4,
+      "max": 16,
+      "step": 4,
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Curated Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "custom_badge",
+          "label": "Badge Override (e.g. Best seller, Top rated, New)",
+          "default": "Best seller"
+        },
+        {
+          "type": "header",
+          "content": "Fallback Demo Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Demo Title",
+          "default": "Purelane Cleaner"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Demo Price",
+          "default": "₹200"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Product Grid"
+    }
+  ]
+}
+{% endschema %}
