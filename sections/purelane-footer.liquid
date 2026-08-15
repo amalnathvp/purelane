@@ -1,0 +1,180 @@
+{% comment %}
+  Purelane Footer Section
+  Multi-column brand footer with navigation menus, contact info, and legal links.
+{% endcomment %}
+
+<footer class="pl-footer" data-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="fgrid">
+      
+      {%- comment -%} Col 1: Brand {%- endcomment -%}
+      <div class="fcol">
+        <a class="pl-brand" href="{{ routes.root_url | default: '#top' }}" style="margin-bottom:16px" aria-label="Purelane Home">
+          <span class="mark">
+            {% render 'purelane-svg-icons', name: 'logo' %}
+          </span>
+          <span class="txt">
+            <span class="n1">{{ section.settings.brand_title | default: 'Purelane' }}</span>
+            <span class="n2">{{ section.settings.brand_tagline | default: 'Clean, simply' }}</span>
+          </span>
+        </a>
+        <p style="max-width:30ch">{{ section.settings.brand_statement | default: 'Effective cleaning, powered by nature. Made for Indian homes since day one.' }}</p>
+      </div>
+
+      {%- comment -%} Col 2: Shop Links {%- endcomment -%}
+      <div class="fcol">
+        <h5>{{ section.settings.col2_title | default: 'Shop' }}</h5>
+        {% if section.settings.col2_menu != blank and linklists[section.settings.col2_menu].links.size > 0 %}
+          {% for link in linklists[section.settings.col2_menu].links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        {% else %}
+          <a href="#shop">Bestsellers</a>
+          <a href="#shop">Kitchen</a>
+          <a href="#shop">Laundry</a>
+          <a href="#shop">Home</a>
+          <a href="#shop">Skin</a>
+          <a href="#bundles">Starter kits</a>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Col 3: About Links {%- endcomment -%}
+      <div class="fcol">
+        <h5>{{ section.settings.col3_title | default: 'About' }}</h5>
+        {% if section.settings.col3_menu != blank and linklists[section.settings.col3_menu].links.size > 0 %}
+          {% for link in linklists[section.settings.col3_menu].links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        {% else %}
+          <a href="#how">How it works</a>
+          <a href="#ingredients">Sustainability</a>
+          <a href="#proof">FAQs</a>
+          <a href="#reviews">Reviews</a>
+        {% endif %}
+      </div>
+
+      {%- comment -%} Col 4: Contact Info {%- endcomment -%}
+      <div class="fcol">
+        <h5>{{ section.settings.col4_title | default: 'Get in touch' }}</h5>
+        {% if section.settings.contact_email != blank %}
+          <a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a>
+        {% endif %}
+        {% if section.settings.contact_phone != blank %}
+          <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone }}</a>
+        {% endif %}
+        {% if section.settings.company_legal_name != blank %}
+          <p style="font-size:12px;color:var(--pl-paper-3);margin-top:4px;">{{ section.settings.company_legal_name }}</p>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <div class="fbot">
+      <span>{{ section.settings.copyright_text | default: '© 2026 Purelane Eco Products Private Limited' }}</span>
+      <span>{{ section.settings.legal_links_text | default: 'Privacy · Terms · Refunds · Contact' }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Purelane Footer",
+  "tag": "footer",
+  "class": "section-purelane-footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Brand Title",
+      "default": "Purelane"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand Tagline",
+      "default": "Clean, simply"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_statement",
+      "label": "Brand Statement",
+      "default": "Effective cleaning, powered by nature. Made for Indian homes since day one."
+    },
+    {
+      "type": "header",
+      "content": "Column 2"
+    },
+    {
+      "type": "text",
+      "id": "col2_title",
+      "label": "Column 2 Title",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "col2_menu",
+      "label": "Column 2 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 3"
+    },
+    {
+      "type": "text",
+      "id": "col3_title",
+      "label": "Column 3 Title",
+      "default": "About"
+    },
+    {
+      "type": "link_list",
+      "id": "col3_menu",
+      "label": "Column 3 Menu"
+    },
+    {
+      "type": "header",
+      "content": "Column 4"
+    },
+    {
+      "type": "text",
+      "id": "col4_title",
+      "label": "Column 4 Title",
+      "default": "Get in touch"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email",
+      "default": "hello@purelane.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Contact Phone",
+      "default": "+91 9930 123 234"
+    },
+    {
+      "type": "text",
+      "id": "company_legal_name",
+      "label": "Company Legal Name",
+      "default": "Purelane Eco Products Pvt Ltd"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "© 2026 Purelane Eco Products Private Limited"
+    },
+    {
+      "type": "text",
+      "id": "legal_links_text",
+      "label": "Legal Links Text",
+      "default": "Privacy · Terms · Refunds · Contact"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Footer"
+    }
+  ]
+}
+{% endschema %}

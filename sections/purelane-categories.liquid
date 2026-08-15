@@ -1,0 +1,149 @@
+{% comment %}
+  Purelane Bundle Categories Section
+  4-card visual directory for category-specific bundles.
+{% endcomment %}
+
+<section class="sec" id="categories" data-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="panel-head rv">
+      {% if section.settings.kicker != blank %}
+        <span class="pl-kicker">{{ section.settings.kicker }}</span>
+      {% endif %}
+      <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="cats">
+      {% for block in section.blocks %}
+        {% if block.type == 'category' %}
+          {% liquid
+            assign delay_class = ''
+            if forloop.index == 2
+              assign delay_class = 'rv-d1'
+            elsif forloop.index == 3
+              assign delay_class = 'rv-d2'
+            elsif forloop.index == 4
+              assign delay_class = 'rv-d3'
+            endif
+          %}
+          <a class="glass cat rv {{ delay_class }}" href="{{ block.settings.link | default: '#combos' }}" {{ block.shopify_attributes }}>
+            <span class="ph">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 340 }}" alt="{{ block.settings.title | escape }}" loading="lazy" class="pimg" height="176">
+              {% else %}
+                <span class="pimg {{ block.settings.silhouette }}" role="img" aria-label="{{ block.settings.title | escape }}"></span>
+              {% endif %}
+            </span>
+            <span class="txt">
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.subtitle }}</p>
+            </span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Categories",
+  "tag": "section",
+  "class": "section-purelane-categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "Bundle categories"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Find the right bundle for you"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Card",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "Kitchen bundle"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Grease, dishes & more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Category Image"
+        },
+        {
+          "type": "select",
+          "id": "silhouette",
+          "label": "Silhouette Fallback",
+          "options": [
+            { "value": "p-kitchen", "label": "Kitchen Cleaner" },
+            { "value": "p-toilet", "label": "Toilet Cleaner" },
+            { "value": "p-laundry", "label": "Laundry Detergent" },
+            { "value": "p-tap", "label": "Tap Cleaner" }
+          ],
+          "default": "p-kitchen"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Kitchen bundle",
+            "subtitle": "Grease, dishes & more",
+            "silhouette": "p-kitchen"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Bathroom bundle",
+            "subtitle": "Deep clean & disinfect",
+            "silhouette": "p-toilet"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Laundry bundle",
+            "subtitle": "Softer, fresher wash",
+            "silhouette": "p-laundry"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Hard water bundle",
+            "subtitle": "Melt away limescale",
+            "silhouette": "p-tap"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

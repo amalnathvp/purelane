@@ -1,0 +1,140 @@
+{% comment %}
+  Purelane Full Range Shelf Section
+  Horizontal bottle lineup showing the full product portfolio.
+{% endcomment %}
+
+<section class="sec" id="range" data-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass range rv">
+      <div class="range-head">
+        <div>
+          {% if section.settings.kicker != blank %}
+            <span class="pl-kicker">{{ section.settings.kicker }}</span>
+          {% endif %}
+          <h2 class="pl-d2" style="margin-top:10px">{{ section.settings.title }}</h2>
+        </div>
+        {% if section.settings.description != blank %}
+          <p class="pl-body-s" style="max-width:34ch;margin-bottom:4px">{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+
+      <div class="stripwrap">
+        <div class="rangerow">
+          {% for block in section.blocks %}
+            {% if block.type == 'bottle' %}
+              {% if block.settings.image != blank %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 280 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  class="pimg"
+                  height="132"
+                  {{ block.shopify_attributes }}
+                >
+              {% else %}
+                <span
+                  class="pimg {{ block.settings.silhouette }}"
+                  role="img"
+                  aria-label="{{ block.settings.title | escape }}"
+                  {{ block.shopify_attributes }}
+                ></span>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if section.settings.mobile_hint != blank %}
+        <p class="striphint">{{ section.settings.mobile_hint }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Range Shelf",
+  "tag": "section",
+  "class": "section-purelane-range",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "The full range"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Every room, one shelf"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Floors, taps, kitchen, laundry, bathroom and hands. Fourteen plant-based formulas that replace every harsh bottle under your sink."
+    },
+    {
+      "type": "text",
+      "id": "mobile_hint",
+      "label": "Mobile Swipe Hint",
+      "default": "Swipe to see the full shelf"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bottle",
+      "name": "Shelf Bottle",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Title",
+          "default": "Cleaner"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Bottle Image"
+        },
+        {
+          "type": "select",
+          "id": "silhouette",
+          "label": "Silhouette Preset",
+          "options": [
+            { "value": "p-floor", "label": "Floor Cleaner" },
+            { "value": "p-tap", "label": "Tap Cleaner" },
+            { "value": "p-kitchen", "label": "Kitchen Cleaner" },
+            { "value": "p-toilet", "label": "Toilet Cleaner" },
+            { "value": "p-laundry", "label": "Laundry Detergent" },
+            { "value": "p-dish", "label": "Dishwash Gel" },
+            { "value": "p-metal", "label": "Metal Cleaner" },
+            { "value": "p-wm", "label": "Washing Machine" },
+            { "value": "p-handwash", "label": "Handwash" },
+            { "value": "p-eraser", "label": "Magic Eraser" }
+          ],
+          "default": "p-floor"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Range Shelf",
+      "blocks": [
+        { "type": "bottle", "settings": { "silhouette": "p-floor", "title": "Floor cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-tap", "title": "Tap cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-kitchen", "title": "Kitchen cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-toilet", "title": "Toilet cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-laundry", "title": "Laundry detergent" } },
+        { "type": "bottle", "settings": { "silhouette": "p-dish", "title": "Dishwash gel" } },
+        { "type": "bottle", "settings": { "silhouette": "p-metal", "title": "Metal cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-wm", "title": "Washing machine cleaner" } },
+        { "type": "bottle", "settings": { "silhouette": "p-handwash", "title": "Liquid handwash" } },
+        { "type": "bottle", "settings": { "silhouette": "p-eraser", "title": "Magic eraser" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

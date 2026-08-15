@@ -1,0 +1,189 @@
+{% comment %}
+  Purelane Botanical Ingredients Section
+  5-column ingredient grid with custom vector line-art and sourcing stories.
+{% endcomment %}
+
+<section class="sec" id="ingredients" data-scene="2" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass sec-pad rv">
+      <div class="panel-head">
+        <h2 class="pl-d2">{{ section.settings.title | default: 'Sourced from nature' }}</h2>
+        <div class="rule">
+          <i></i>
+          {% render 'purelane-svg-icons', name: 'leaf' %}
+          <i></i>
+        </div>
+      </div>
+
+      <div class="ing">
+        {% for block in section.blocks %}
+          {% if block.type == 'ingredient' %}
+            <div class="ing-i" {{ block.shopify_attributes }}>
+              <div class="art">
+                {% if block.settings.custom_image != blank %}
+                  <img src="{{ block.settings.custom_image | image_url: width: 160 }}" alt="{{ block.settings.title | escape }}" loading="lazy" height="84">
+                {% else %}
+                  {% case block.settings.art_preset %}
+                    {% when 'coconut' %}
+                      <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="50" cy="62" r="25"/>
+                        <path d="M31 53c9-6 29-6 38 0" stroke="#f0a03c"/>
+                        <path d="M41 63c4 8 14 8 18 0" opacity=".55"/>
+                        <path d="M50 37V25"/>
+                        <path d="M50 27C42 18 30 16 21 21c5 10 17 13 29 6Z" stroke="#f0a03c"/>
+                        <path d="M50 27c8-9 20-11 29-6-5 10-17 13-29 6Z" stroke="#f0a03c"/>
+                      </svg>
+                    {% when 'orange' %}
+                      <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="45" cy="58" r="23"/>
+                        <path d="M45 35v46M22 58h46" opacity=".4"/>
+                        <path d="M29 42 61 74M61 42 29 74" opacity=".26"/>
+                        <path d="M62 28c13-1 20 10 15 20-4 8-15 9-19 2" stroke="#f0a03c"/>
+                        <path d="M45 34c-3-8 2-15 10-16 1 9-3 15-10 16Z" stroke="#f0a03c"/>
+                      </svg>
+                    {% when 'soapnut' %}
+                      <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="36" cy="66" r="16"/>
+                        <circle cx="64" cy="69" r="14"/>
+                        <circle cx="50" cy="43" r="14"/>
+                        <path d="M50 29V17"/>
+                        <path d="M50 21c-8-8-18-8-23-2 7 8 17 10 23 2Z" stroke="#f0a03c"/>
+                        <path d="M31 60a5 5 0 0 1 4-4" opacity=".6"/>
+                        <path d="M46 38a5 5 0 0 1 4-4" opacity=".6"/>
+                      </svg>
+                    {% when 'neem' %}
+                      <svg viewBox="0 0 100 100" fill="none" stroke="#ece6f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 82C36 66 58 44 82 20" stroke="#f0a03c"/>
+                        <path d="M27 73c-6-7-4-15 3-18 4 7 3 14-3 18Z"/>
+                        <path d="M31 69c8-4 15 0 16 8-8 2-14-1-16-8Z"/>
+                        <path d="M41 59c-6-7-4-16 3-19 4 7 3 15-3 19Z"/>
+                        <path d="M45 55c9-4 16 0 17 8-8 2-15-1-17-8Z"/>
+                        <path d="M56 44c-6-7-4-16 3-19 4 7 3 15-3 19Z"/>
+                        <path d="M60 40c9-4 16 0 17 8-8 2-15-1-17-8Z"/>
+                        <path d="M70 30c-5-7-3-15 4-18 3 7 2 14-4 18Z"/>
+                      </svg>
+                    {% when 'lemongrass' %}
+                      <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+                        <g fill="#ece6f7" opacity=".88">
+                          <path d="M50 88C44 62 39 42 24 15c15 27 22 47 29 73Z"/>
+                          <path d="M52 88C50 60 50 39 44 9c11 29 13 50 12 79Z"/>
+                          <path d="M54 88C56 60 60 40 74 13c-11 28-15 48-16 75Z"/>
+                          <path d="M56 88C60 64 68 48 86 27c-14 22-21 38-26 61Z"/>
+                          <path d="M48 88C44 66 36 50 18 30c14 21 22 36 27 58Z"/>
+                        </g>
+                        <path d="M50 88h6" stroke="#f0a03c" stroke-width="2.4" stroke-linecap="round"/>
+                      </svg>
+                  {% endcase %}
+                {% endif %}
+              </div>
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Ingredients",
+  "tag": "section",
+  "class": "section-purelane-ingredients",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Sourced from nature"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Botanical Ingredient",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Ingredient Name",
+          "default": "Coconut"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Ingredient Benefit",
+          "default": "Plant-derived cleansers that lift grease"
+        },
+        {
+          "type": "select",
+          "id": "art_preset",
+          "label": "Line Art Preset",
+          "options": [
+            { "value": "coconut", "label": "Coconut" },
+            { "value": "orange", "label": "Orange Peel" },
+            { "value": "soapnut", "label": "Soap Nut" },
+            { "value": "neem", "label": "Neem Leaf" },
+            { "value": "lemongrass", "label": "Lemongrass" }
+          ],
+          "default": "coconut"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Art Image (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Coconut",
+            "description": "Plant-derived cleansers that lift grease",
+            "art_preset": "coconut"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Orange peel",
+            "description": "Natural degreaser and fresh citrus lift",
+            "art_preset": "orange"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Soap nut",
+            "description": "A traditional plant foaming agent",
+            "art_preset": "soapnut"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Neem",
+            "description": "Time-tested antibacterial from the tree",
+            "art_preset": "neem"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Lemongrass",
+            "description": "Clean fragrance with nothing synthetic",
+            "art_preset": "lemongrass"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

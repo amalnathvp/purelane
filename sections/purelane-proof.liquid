@@ -1,0 +1,287 @@
+{% comment %}
+  Purelane Proof / Why It Works Section
+  Interactive product rotator cycling through bottles with synchronized notes and animated 4-stat metrics grid.
+{% endcomment %}
+
+<section class="sec" id="proof" data-scene="3" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass sec-pad rv">
+      <div class="proof">
+        
+        {%- comment -%} Left Column Copy {%- endcomment -%}
+        <div class="proof-l">
+          {% if section.settings.kicker != blank %}
+            <span class="pl-kicker">{{ section.settings.kicker }}</span>
+          {% endif %}
+          <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+          <p class="pl-body-s" style="max-width:40ch">{{ section.settings.description }}</p>
+          {% if section.settings.cta_label != blank %}
+            <a class="btn btn-primary" href="{{ section.settings.cta_link | default: '#ingredients' }}">
+              {{ section.settings.cta_label }}
+              {% render 'purelane-svg-icons', name: 'arrow-right' %}
+            </a>
+          {% endif %}
+        </div>
+
+        {%- comment -%} Right Column Product Rotator {%- endcomment -%}
+        <div class="glass-2 rot" id="rot" data-speed="{{ section.settings.rotator_speed | default: 2900 }}" aria-label="Product benefit rotator">
+          <div class="frame">
+            {% assign rot_index = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'rotator_item' %}
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 380 }}"
+                    alt="{{ block.settings.title | escape }}"
+                    class="pimg{% if rot_index == 0 %} on{% endif %}"
+                    data-name="{{ block.settings.title | escape }}"
+                    data-note="{{ block.settings.note | escape }}"
+                    loading="lazy"
+                    height="196"
+                  >
+                {% else %}
+                  <span
+                    class="pimg {{ block.settings.silhouette | default: 'p-kitchen' }}{% if rot_index == 0 %} on{% endif %}"
+                    role="img"
+                    aria-label="{{ block.settings.title | escape }}"
+                    data-name="{{ block.settings.title | escape }}"
+                    data-note="{{ block.settings.note | escape }}"
+                  ></span>
+                {% endif %}
+                {% assign rot_index = rot_index | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <div class="cap">
+            <b>{{ section.blocks.first.settings.title | default: 'Kitchen cleaner' }}</b>
+            <span>{{ section.blocks.first.settings.note | default: 'Foam lifts grease, no scrubbing' }}</span>
+          </div>
+
+          <div class="dots">
+            {% assign dot_i = 0 %}
+            {% for block in section.blocks %}
+              {% if block.type == 'rotator_item' %}
+                <i class="{% if dot_i == 0 %}on{% endif %}"></i>
+                {% assign dot_i = dot_i | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        {%- comment -%} Bottom Stats Grid {%- endcomment -%}
+        <div class="glass-2 stats proof-stats" style="grid-column:1/-1">
+          {% for block in section.blocks %}
+            {% if block.type == 'stat_item' %}
+              <div class="stat" {{ block.shopify_attributes }}>
+                <div class="ring">{{ block.settings.stat_value }}</div>
+                <h5>{{ block.settings.stat_title }}</h5>
+                <p>{{ block.settings.stat_description }}</p>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Proof & Rotator",
+  "tag": "section",
+  "class": "section-purelane-proof",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "Why it works"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Tough on grime.<br>Gentle on everything else."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description Text",
+      "default": "Every formula is built on plant-derived cleansers and essential oils. It behaves exactly like the cleaner you are used to, minus the things you never signed up for."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Label",
+      "default": "See the ingredient list"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "range",
+      "id": "rotator_speed",
+      "label": "Rotator Cycle Speed (ms)",
+      "min": 1500,
+      "max": 6000,
+      "step": 200,
+      "default": 2900
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rotator_item",
+      "name": "Rotator Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Product Name",
+          "default": "Kitchen cleaner"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Benefit Note",
+          "default": "Foam lifts grease, no scrubbing"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Product Image"
+        },
+        {
+          "type": "select",
+          "id": "silhouette",
+          "label": "Silhouette Fallback",
+          "options": [
+            { "value": "p-kitchen", "label": "Kitchen Cleaner" },
+            { "value": "p-tap", "label": "Tap Cleaner" },
+            { "value": "p-laundry", "label": "Laundry Detergent" },
+            { "value": "p-toilet", "label": "Toilet Cleaner" },
+            { "value": "p-floor", "label": "Floor Cleaner" },
+            { "value": "p-dish", "label": "Dishwash Gel" }
+          ],
+          "default": "p-kitchen"
+        }
+      ]
+    },
+    {
+      "type": "stat_item",
+      "name": "Stat Ring Metric",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "stat_value",
+          "label": "Metric Value (e.g. 99.9%)",
+          "default": "99.9%"
+        },
+        {
+          "type": "text",
+          "id": "stat_title",
+          "label": "Metric Title",
+          "default": "Germ kill"
+        },
+        {
+          "type": "textarea",
+          "id": "stat_description",
+          "label": "Metric Subtitle",
+          "default": "Tested against germs and bacteria"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Proof & Rotator",
+      "blocks": [
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Kitchen cleaner",
+            "note": "Foam lifts grease, no scrubbing",
+            "silhouette": "p-kitchen"
+          }
+        },
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Tap & limescale",
+            "note": "Melts hard water stains",
+            "silhouette": "p-tap"
+          }
+        },
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Laundry detergent",
+            "note": "Tough on odour, soft on fabric",
+            "silhouette": "p-laundry"
+          }
+        },
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Toilet cleaner",
+            "note": "Kills 99.9% of germs",
+            "silhouette": "p-toilet"
+          }
+        },
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Floor cleaner",
+            "note": "Neem powered, pet safe",
+            "silhouette": "p-floor"
+          }
+        },
+        {
+          "type": "rotator_item",
+          "settings": {
+            "title": "Dishwash gel",
+            "note": "Cuts grease, kind to hands",
+            "silhouette": "p-dish"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "99.9%",
+            "stat_title": "Germ kill",
+            "stat_description": "Tested against germs and bacteria"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "0%",
+            "stat_title": "Sulphates",
+            "stat_description": "No SLS, chlorine or parabens"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "100%",
+            "stat_title": "Plant based",
+            "stat_description": "Cleansers derived from plants"
+          }
+        },
+        {
+          "type": "stat_item",
+          "settings": {
+            "stat_value": "4.8",
+            "stat_title": "Rated",
+            "stat_description": "Across 8,000+ verified reviews"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

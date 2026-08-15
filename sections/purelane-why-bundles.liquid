@@ -1,0 +1,125 @@
+{% comment %}
+  Purelane Why Bundles Beat Buying Single Section
+  4-column value proposition grid with custom icon badges.
+{% endcomment %}
+
+<section class="sec" id="whybundles" data-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass sec-pad rv">
+      <div class="panel-head">
+        {% if section.settings.kicker != blank %}
+          <span class="pl-kicker">{{ section.settings.kicker }}</span>
+        {% endif %}
+        <h2 class="pl-d2" style="margin-top:12px">{{ section.settings.title }}</h2>
+      </div>
+
+      <div class="wb">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+            <div class="wb-i" {{ block.shopify_attributes }}>
+              <span class="ci">
+                {% render 'purelane-svg-icons', name: block.settings.icon %}
+              </span>
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Why Bundles",
+  "tag": "section",
+  "class": "section-purelane-why-bundles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "The smarter way to shop"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Why bundles beat buying single"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Bundle Benefit",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "discount", "label": "Discount / Savings" },
+            { "value": "checkbox", "label": "Checkbox / Simple" },
+            { "value": "star-badge", "label": "Star / Curated" },
+            { "value": "truck", "label": "Truck / Free Shipping" }
+          ],
+          "default": "discount"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Headline",
+          "default": "Save up to 45%"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Benefit Subtitle",
+          "default": "Versus buying the same products separately"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Why Bundles",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "discount",
+            "title": "Save up to 45%",
+            "description": "Versus buying the same products separately"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "checkbox",
+            "title": "One flat price",
+            "description": "No calculators, no comparing carts"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "star-badge",
+            "title": "Curated by experts",
+            "description": "Products picked to work well together"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping always",
+            "description": "Included on every bundle, all India"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

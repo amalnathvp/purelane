@@ -1,0 +1,184 @@
+{% comment %}
+  Purelane Header & Ticker Section
+  Floating glassmorphic navigation bar with logo, cart counter, and infinite marquee announcement ticker.
+{% endcomment %}
+
+{%- comment -%} Ticker Bar {%- endcomment -%}
+{% if section.settings.show_ticker %}
+  <div class="pl-ticker" aria-hidden="true">
+    <div class="track" style="animation-duration: {{ section.settings.ticker_speed | default: 30 }}s">
+      {% for repeat in (1..2) %}
+        {% for block in section.blocks %}
+          {% if block.type == 'ticker_item' %}
+            <span>{{ block.settings.text_prefix }} <b>{{ block.settings.highlight_text }}</b></span>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{%- comment -%} Floating Navbar {%- endcomment -%}
+<header class="pl-header" id="hdr" data-section-id="{{ section.id }}">
+  <div class="pl-navpill glass">
+    <a class="pl-brand" href="{{ routes.root_url | default: '#top' }}" aria-label="Purelane Home">
+      <span class="mark">
+        {% render 'purelane-svg-icons', name: 'logo' %}
+      </span>
+      <span class="txt">
+        <span class="n1">{{ section.settings.brand_title | default: 'Purelane' }}</span>
+        <span class="n2">{{ section.settings.brand_tagline | default: 'Clean, simply' }}</span>
+      </span>
+    </a>
+
+    <nav class="pl-nav" aria-label="Main Navigation">
+      {% if section.settings.menu != blank and linklists[section.settings.menu].links.size > 0 %}
+        {% for link in linklists[section.settings.menu].links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        <a href="#top">Home</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#how">How it works</a>
+        <a href="#shop">Shop</a>
+        <a href="#bundles">Bundles</a>
+      {% endif %}
+    </nav>
+
+    <div class="pl-navtools">
+      {% if section.settings.show_search %}
+        <a href="{{ routes.search_url }}" class="pl-ico hide-s" aria-label="Search">
+          {% render 'purelane-svg-icons', name: 'search' %}
+        </a>
+      {% endif %}
+
+      {% if shop.customer_accounts_enabled and section.settings.show_account %}
+        <a href="{{ routes.account_url }}" class="pl-ico hide-s" aria-label="Account">
+          {% render 'purelane-svg-icons', name: 'account' %}
+        </a>
+      {% endif %}
+
+      <a href="{{ routes.cart_url }}" class="pl-ico" aria-label="Cart, {{ cart.item_count | default: 0 }} items">
+        {% render 'purelane-svg-icons', name: 'cart' %}
+        <span class="pl-dot">{{ cart.item_count | default: 0 }}</span>
+      </a>
+
+      <button class="pl-ico pl-burger" aria-label="Open Menu">
+        {% render 'purelane-svg-icons', name: 'menu' %}
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Purelane Header & Ticker",
+  "tag": "header",
+  "class": "section-purelane-header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Brand Title",
+      "default": "Purelane"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand Tagline",
+      "default": "Clean, simply"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show Search Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show Account Button",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Ticker Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ticker",
+      "label": "Show Ticker Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "ticker_speed",
+      "label": "Ticker Speed (seconds)",
+      "min": 15,
+      "max": 60,
+      "step": 5,
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ticker_item",
+      "name": "Ticker Announcement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text_prefix",
+          "label": "Standard Text Prefix",
+          "default": "Free shipping"
+        },
+        {
+          "type": "text",
+          "id": "highlight_text",
+          "label": "Highlighted Bold Text",
+          "default": "on every bundle across India"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Header & Ticker",
+      "blocks": [
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text_prefix": "Free shipping",
+            "highlight_text": "on every bundle across India"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text_prefix": "100% plant-based",
+            "highlight_text": "and non-toxic"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text_prefix": "Loved by",
+            "highlight_text": "30,000+ happy homes"
+          }
+        },
+        {
+          "type": "ticker_item",
+          "settings": {
+            "text_prefix": "Buy 3",
+            "highlight_text": "at flat ₹499"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

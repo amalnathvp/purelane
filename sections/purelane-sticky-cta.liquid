@@ -1,0 +1,59 @@
+{% comment %}
+  Purelane Sticky Mobile Bottom Conversion CTA Bar
+{% endcomment %}
+
+{% if section.settings.enable_sticky %}
+  <div class="sticky" data-section-id="{{ section.id }}">
+    <span class="lbl">
+      <b>{{ section.settings.headline | default: 'Pick any 3, pay ₹499' }}</b>
+      <span>{{ section.settings.subheadline | default: 'Free shipping, always' }}</span>
+    </span>
+    <a class="btn btn-primary btn-sm" href="{{ section.settings.button_link | default: '#bundles' }}">
+      {{ section.settings.button_label | default: 'Build bundle' }}
+    </a>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Purelane Sticky Mobile CTA",
+  "tag": "aside",
+  "class": "section-purelane-sticky",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "Enable Sticky Mobile CTA",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Pick any 3, pay ₹499"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Free shipping, always"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Build bundle"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Sticky Mobile CTA"
+    }
+  ]
+}
+{% endschema %}

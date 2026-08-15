@@ -1,0 +1,89 @@
+{% comment %}
+  Purelane Trust Signals Bar Section
+  4-item horizontal reassurance strip.
+{% endcomment %}
+
+<section class="sec" data-scene="4" data-section-id="{{ section.id }}">
+  <div class="pl-wrap">
+    <div class="glass trust rv">
+      {% for block in section.blocks %}
+        {% if block.type == 'trust_badge' %}
+          <div class="trust-i" {{ block.shopify_attributes }}>
+            {% render 'purelane-svg-icons', name: block.settings.icon %}
+            <span>{{ block.settings.text | newline_to_br }}</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Purelane Trust Bar",
+  "tag": "section",
+  "class": "section-purelane-trust",
+  "blocks": [
+    {
+      "type": "trust_badge",
+      "name": "Trust Signal",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf / Plant" },
+            { "value": "box-open", "label": "Package / Recyclable" },
+            { "value": "heart-hand", "label": "Heart / Safe" },
+            { "value": "globe-india", "label": "Globe / Made in India" }
+          ],
+          "default": "leaf"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Badge Text",
+          "default": "Plant derived\nformulas"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Purelane Trust Bar",
+      "blocks": [
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "leaf",
+            "text": "Plant derived\nformulas"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "box-open",
+            "text": "Recyclable\npackaging"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "heart-hand",
+            "text": "Safe for\nkids & pets"
+          }
+        },
+        {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "globe-india",
+            "text": "Made in\nIndia"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
